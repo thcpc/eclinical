@@ -1,6 +1,6 @@
 import os
 
-from eClinical.environment.environment import Environment
+from eclinical.environment.environment import Environment
 
 
 class SmokeEnvironment(Environment):

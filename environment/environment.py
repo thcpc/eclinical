@@ -1,6 +1,6 @@
 import yaml
 
-from eClinical.execption import required, optional
+from eclinical.execption import required, optional
 
 
 def value(func):

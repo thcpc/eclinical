@@ -1,12 +1,12 @@
 import cjen
-import eClinical
-from eClinical.service._login_service import _LoginService
-from eClinical.service.data._study_login_data import _StudyLoginData
+import eclinical
+from eclinical.service._login_service import _LoginService
+from eclinical.service.data._study_login_data import _StudyLoginData
 
 
 class _StudyLoginService(_LoginService):
 
-    def __init__(self, environment: eClinical.Environment):
+    def __init__(self, environment: eclinical.Environment):
         super().__init__(environment)
         self.auth(data=self.user_pwd())
         self.__cross_user() or self.__normal_user()

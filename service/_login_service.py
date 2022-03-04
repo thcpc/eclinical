@@ -3,9 +3,8 @@ import time
 import cjen
 import jsonpath
 from cjen import BigTangerine
-import eClinical
-# from eClinical import Environment
-from eClinical.utils.ecrypto import Ecrypto
+import eclinical
+from eclinical.utils.ecrypto import Ecrypto
 
 
 class _LoginService(BigTangerine):
@@ -13,7 +12,7 @@ class _LoginService(BigTangerine):
         "Accept": "application/json, text/plain, */*",
         "Content-Type": "application/json"
     })
-    def __init__(self, environment: eClinical.Environment):
+    def __init__(self, environment: eclinical.Environment):
         super().__init__()
         self.environment = environment
         self.base_url = self.__dict__.get("base_url", self.environment.uri)

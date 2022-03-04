@@ -1,9 +1,9 @@
 from Crypto.Cipher import PKCS1_v1_5 as Cipher_pksc1_v1_5
 from Crypto.PublicKey import RSA
 import base64
-import eClinical
+import eclinical
 # from eClinical import Environment
-from eClinical.environment.environment import Environment
+from eclinical.environment.environment import Environment
 
 
 class Ecrypto:

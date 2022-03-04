@@ -1,9 +1,9 @@
 import cjen
 
-from eClinical.environment.environment import Environment
-from eClinical.service._login_service import _LoginService
-from eClinical.service.data._sponsor_login_data import _SponsorLoginData
-from eClinical.service.data._study_login_data import _StudyLoginData
+from eclinical.environment.environment import Environment
+from eclinical.service._login_service import _LoginService
+from eclinical.service.data._sponsor_login_data import _SponsorLoginData
+from eclinical.service.data._study_login_data import _StudyLoginData
 
 
 class _SponsorLoginService(_LoginService):
