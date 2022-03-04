@@ -12,12 +12,13 @@ class _StudyLoginService(_LoginService):
         self.__cross_user() or self.__normal_user()
         self.user_onboard(
             data={k: v for k, v in self.context.content.items() if
-                  k in ["applicationId", "sponsorId", "studyId", "envId"]})
+                  k in ["applicationId", "sponsorId", "studyId", "envId", "workForCompanyId"]})
 
     def __cross_user(self):
         if self.context.get("company"):
             self.company()
             self.applications_cross_user(path_variable=dict(company_id=self.context.get("company_id")))
+            self.context["workForCompanyId"] = self.context.get("company_id")
             return True
         return False
 
