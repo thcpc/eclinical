@@ -175,21 +175,38 @@ class Scaffold(object):
 
 
 class ScaffoldGM(object):
-    def __init__(self, name: str, service: str, meta_type: str, meta_name: str):
+    def __init__(self, name: str, service: str, meta_type: str, meta_name: str, props: list[str]):
         self.name = name
-        self.services = service
+        self.service = service
         self.meta_type = meta_type
         self.meta_name = meta_name
+        self.props = props
 
-    def write_json(self): ...
+    def write_json(self):
+        with open("ff", mode="w") as f:
+            f.write("import cjen\nfrom cjen import MetaJson\n\n\n")
+            f.write(f"class {clazz_name(self.meta_name)}(MetaJson):\n")
+            for prop in self.props:
+                f.write(f"@cjen.operate.common.value\n")
+                f.write(f"@cjen.operate.json.one(json_path=\"请填写jsonpath\")\n")
+                f.write(f"def {prop}(self): ...\n\n\n")
 
-    def write_mysql(self): ...
+    def write_mysql(self):
+        with open("ff", mode="w") as f:
+            f.write("import cjen\nfrom cjen import MetaMysql\n\n\n")
+            f.write(f"class {clazz_name(self.meta_name)}(MetaMysql):\n")
+            for prop in self.props:
+                f.write(f"@cjen.operate.common.value\n")
+                f.write(f"def {prop}(self): ...\n\n\n")
 
-    def execute(self): pass
+    def execute(self):
+        # 在用例文件夹中 或 在用例文件夹的父文件夹中
+        if os.path.dirname(os.getcwd()) == self.name and os.path.exists(os.path.join(os.getcwd(),self.name)): pass
+
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--t", type=str, required=True, help="用例的名字")
+parser.add_argument("--t", type=str, required=True, help="用例的名字,必须指定")
 parser.add_argument("-a", action='store_true', help="在已有的用例中,增加service,需添加该参数")
 parser.add_argument("--app", type=str,
                     help="service为哪个系统[edc,design,etmf,pv,ctms,portal,portaladmin,iwrs]")
@@ -225,8 +242,10 @@ def init_test_case(cmd_options):
 
 def init_meta(cmd_options):
     if args.gm:
-        service = cmd_options.s if cmd_options.s else input("请输入你想为哪个service 增加meta:")
-        return ScaffoldGM(name=cmd_options.t, service=cmd_options.s, meta_type=cmd_options.mt, meta_name=cmd_options.mn)
+        service = cmd_options.s if cmd_options.s else input("请输入你想为哪个service 增加meta:\n")
+        meta_name = cmd_options.mn if cmd_options.mn else input("请输入meta文件名,命名方式'xx_yy':\n")
+        meta_type = cmd_options.mt if cmd_options.mt else input("请输入meta对象类型[mysql/json]:\n")
+        return ScaffoldGM(name=cmd_options.t, service=cmd_options.service, meta_type=meta_type, meta_name=meta_name)
 
 
 if __name__ == '__main__':
