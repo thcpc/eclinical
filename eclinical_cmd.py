@@ -1,6 +1,7 @@
 import os
 import argparse
 from typing import IO
+import re
 
 OK_RESPONSE = """
 import cjen
@@ -182,34 +183,102 @@ class ScaffoldGM(object):
         self.meta_name = meta_name
         self.props = props
 
-    def write_json(self):
-        with open("ff", mode="w") as f:
-            f.write("import cjen\nfrom cjen import MetaJson\n\n\n")
-            f.write(f"class {clazz_name(self.meta_name)}(MetaJson):\n")
-            for prop in self.props:
-                f.write(f"@cjen.operate.common.value\n")
-                f.write(f"@cjen.operate.json.one(json_path=\"请填写jsonpath\")\n")
-                f.write(f"def {prop}(self): ...\n\n\n")
+    def write_json(self, meta_path: str):
+        if self.meta_type.lower() == 'json':
+            if not os.path.exists(os.path.join(meta_path, f"{self.service}_service")):
+                os.mkdir(os.path.join(meta_path, f"{self.service}_service"))
+            if os.path.exists(os.path.join(meta_path, f"{self.service}_service", f"{self.meta_name}.py")):
+                action = input(f"{self.meta_name} 已存在,是否覆盖 y/n:\n")
+                if action != 'y':
+                    print("忽略")
+                    return False
+            with open(os.path.join(meta_path, f"{self.service}_service", f"{self.meta_name}.py"), encoding='utf-8',
+                      mode="w") as f:
+                f.write("import cjen\nfrom cjen import MetaJson\n\n\n")
+                f.write(f"class {clazz_name(self.meta_name)}(MetaJson):\n")
+                for prop in self.props:
+                    f.write(f"\t@cjen.operate.common.value\n")
+                    f.write(f"\t@cjen.operate.json.one(json_path=\"请填写jsonpath\")\n")
+                    f.write(f"\tdef {prop}(self): ...\n\n")
+            return True
+        return False
 
-    def write_mysql(self):
-        with open("ff", mode="w") as f:
-            f.write("import cjen\nfrom cjen import MetaMysql\n\n\n")
-            f.write(f"class {clazz_name(self.meta_name)}(MetaMysql):\n")
-            for prop in self.props:
-                f.write(f"@cjen.operate.common.value\n")
-                f.write(f"def {prop}(self): ...\n\n\n")
+    def write_mysql(self, meta_path: str):
+        if self.meta_type.lower() == 'mysql':
+            if not os.path.exists(os.path.join(meta_path, f"{self.service}_service")):
+                os.mkdir(os.path.join(meta_path, f"{self.service}_service"))
+            if os.path.exists(os.path.join(meta_path, f"{self.service}_service", f"{self.meta_name}.py")):
+                action = input(f"{self.meta_name} 已存在,是否覆盖 y/n:\n")
+                if action != 'y':
+                    print("忽略")
+                    return False
+            with open(os.path.join(meta_path, f"{self.service}_service", f"{self.meta_name}.py"), mode="w") as f:
+                f.write("import cjen\nfrom cjen import MetaMysql\n\n\n")
+                f.write(f"class {clazz_name(self.meta_name)}(MetaMysql):\n")
+                for prop in self.props:
+                    f.write(f"\t@cjen.operate.common.value\n")
+                    f.write(f"\tdef {prop}(self): ...\n\n")
+            return True
+        return False
 
     def execute(self):
-        # 在用例文件夹中 或 在用例文件夹的父文件夹中
-        if os.path.dirname(os.getcwd()) == self.name and os.path.exists(os.path.join(os.getcwd(),self.name)): pass
 
+        if os.path.basename(os.getcwd()) == self.name:
+            # 在用例文件夹中
+            meta_path = os.path.join(os.getcwd(), "meta")
+            if self.meta_type.lower() == 'mysql':
+                self.write_mysql(meta_path=meta_path)
+            else:
+                self.write_json(meta_path=meta_path)
+        elif os.path.exists(os.path.join(os.getcwd(), self.name)):
+            # 在用例文件夹的父文件夹中
+            meta_path = os.path.join(os.getcwd(), self.name, "meta")
+            if self.meta_type.lower() == 'mysql':
+                self.write_mysql(meta_path=meta_path)
+            else:
+                self.write_json(meta_path=meta_path)
+        else:
+            raise Exception(f"can not find {self.name}")
+
+
+class System:
+    def __init__(self):
+        self.apps = ["portaladmin", "portal", "ctms", "etmf", "design", "edc", "iwrs", "eConsent(暂时不支持)", "pv",
+                     "IDP(暂不支持)"]
+
+    def __repr__(self):
+        string = "service为哪个系统["
+        string += ",".join([f"{i}:{v}" for i, v in enumerate(self.apps)])
+        string += "]"
+        return string
+
+    def get(self, index):
+        if index == 7 or index == 9: raise Exception(self.apps[index])
+        if index < 0 or index >= len(self.apps): raise Exception(f"{index} 非法输入")
+        return self.apps[index]
+
+
+class MetaTypes:
+    def __init__(self):
+        self.meta_types = ["mysql", "json"]
+
+    def __repr__(self):
+        string = "请选择meta对象类型["
+        string += ",".join([f"{i}:{v}" for i, v in enumerate(self.meta_types)])
+        string += "]"
+        return string
+
+    def get(self, index):
+        if index < 0 or index >= len(self.meta_types):
+            raise Exception(f"{index} 非法输入")
+        return self.meta_types[index]
 
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--t", type=str, required=True, help="用例的名字,必须指定")
 parser.add_argument("-a", action='store_true', help="在已有的用例中,增加service,需添加该参数")
 parser.add_argument("--app", type=str,
-                    help="service为哪个系统[edc,design,etmf,pv,ctms,portal,portaladmin,iwrs]")
+                    help=str(System()))
 parser.add_argument("--ss", type=str,
                     help="创建的service文件, 命名规则'xx_service', 如果有多个的话,以','间隔\n "
                          "例子: --ss crf_page_service,dataset_page_service",
@@ -217,7 +286,7 @@ parser.add_argument("--ss", type=str,
 
 parser.add_argument("--gm", action="store_true", help="是否在meta文件夹中创建service文件夹， 必须通过--s 指定service")
 parser.add_argument("--mn", help="meta名字, 配合 --gm命令, 例子: ok_response", default="")
-parser.add_argument("--mt", help="meta类型,[mysql/json], 配合 --gm命令, 例子: ok_response", default="")
+parser.add_argument("--mt", help=f"meta类型,{str(MetaTypes())}, 配合 --gm命令, 例子: ok_response", default="")
 parser.add_argument("--s", type=str,
                     help="添加meta 的 service文件, 配合 --gm命令",
                     default="")
@@ -233,22 +302,69 @@ args = parser.parse_args()
 def init_test_case(cmd_options):
     if not args.gm:
         services = cmd_options.ss if cmd_options.ss else input("请输入你想创建的service,命名方式'xx_yy',多个以','分割\n")
-        application = cmd_options.app if cmd_options.app else input(
-            "请输入service属于哪个系统[edc,design,etmf,pv,ctms,portal,portaladmin,iwrs]?\n")
+        system = System()
+        application_index = input(f"{str(system)}\n")
+        application = system.get(int(application_index))
         services = Service.factory(services=services, application=application)
         return Scaffold(name=cmd_options.t, services=services, append_action=cmd_options.a)
     return None
 
 
+class ExistService:
+    def __init__(self, name):
+        if os.path.basename(os.getcwd()) == name:
+            self.path = os.path.join(os.getcwd())
+        elif os.path.exists(os.path.join(os.getcwd(), name)):
+            # 在用例文件夹的父文件夹中
+            self.path = os.path.join(os.getcwd(), name)
+        self.cache = []
+        self.scan()
+
+    def scan(self):
+        if os.path.exists(os.path.join(self.path, "service")):
+            for root, dirs, files in os.walk(os.path.join(self.path, "service")):
+                for file in files:
+                    match_obj = re.match(r'(.*)_service.py$', file)
+                    if match_obj: self.cache.append(match_obj.group(1))
+
+    def __repr__(self):
+        string = "请选择service序号,如无请手动输入service名["
+        if self.cache:
+            string += ",".join([f"{i + 1}:{v}" for i, v in enumerate(self.cache)])
+        string += "]"
+        return string
+
+    def get(self, selected: str) -> str:
+        match_obj = re.match(r"\d+", selected)
+        if match_obj:
+            index = int(match_obj.group())
+            if index - 1 > len(self.cache) or index < 0: raise Exception(f"{index} 输入service 序号非法")
+            return self.cache[index - 1]
+        else:
+            return selected
+
+
 def init_meta(cmd_options):
     if args.gm:
-        service = cmd_options.s if cmd_options.s else input("请输入你想为哪个service 增加meta:\n")
+        service_select = ExistService(cmd_options.t)
+        if cmd_options.s:
+            service = cmd_options.s
+        else:
+            service = service_select.get(input(f"{str(service_select)} 增加meta:\n"))
         meta_name = cmd_options.mn if cmd_options.mn else input("请输入meta文件名,命名方式'xx_yy':\n")
-        meta_type = cmd_options.mt if cmd_options.mt else input("请输入meta对象类型[mysql/json]:\n")
-        return ScaffoldGM(name=cmd_options.t, service=cmd_options.service, meta_type=meta_type, meta_name=meta_name)
+
+        if cmd_options.mt:
+            meta_type = cmd_options.mt
+        else:
+            meta_index = input(f"{MetaTypes()}:\n")
+            meta_type = MetaTypes().get(int(meta_index))
+        props = cmd_options.props if cmd_options.props else input("请输入meta的属性(多个以,分割):\n")
+        return ScaffoldGM(name=cmd_options.t, service=service, meta_type=meta_type, meta_name=meta_name,
+                          props=props.split(","))
 
 
 if __name__ == '__main__':
+    # print(str(ExistService("test")))
     # try:
     scaffold = init_test_case(args) or init_meta(args)
     scaffold.execute()
