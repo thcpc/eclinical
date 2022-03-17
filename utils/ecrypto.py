@@ -3,7 +3,7 @@ from Crypto.PublicKey import RSA
 import base64
 
 # from eClinical import Environment
-from environment.environment import Environment
+from eclinical.environment.environment import Environment
 
 
 class Ecrypto:

@@ -1,8 +1,8 @@
 import cjen
 import eclinical
 
-from service._login_service import _LoginService
-from service.data._study_login_data import _StudyLoginData
+from eclinical.service._login_service import _LoginService
+from eclinical.service.data._study_login_data import _StudyLoginData
 
 
 class _StudyLoginService(_LoginService):

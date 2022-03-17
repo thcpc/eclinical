@@ -1,7 +1,7 @@
 import cjen
 
-from environment.environment import Environment
-from service._login_service import _LoginService
+from eclinical.environment.environment import Environment
+from eclinical.service._login_service import _LoginService
 
 
 class PortalAdministratorLoginService(_LoginService):

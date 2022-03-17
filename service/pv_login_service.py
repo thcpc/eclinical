@@ -8,8 +8,8 @@ FilePath: \eClinical4.0_testing\eClinical\service\pv_login_service.py
 '''
 import cjen
 
-from environment.environment import Environment
-from service._sponsor_login_service import _SponsorLoginService
+from eclinical.environment.environment import Environment
+from eclinical.service._sponsor_login_service import _SponsorLoginService
 
 
 class PVLoginService(_SponsorLoginService):
