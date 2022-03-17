@@ -363,10 +363,17 @@ def init_meta(cmd_options):
                           props=props.split(","))
 
 
-if __name__ == '__main__':
+def run():
+    try:
+        scaffold = init_test_case(args) or init_meta(args)
+        scaffold.execute()
+    except Exception as e:
+        print(e)
+
+# if __name__ == '__main__':
     # print(str(ExistService("test")))
     # try:
-    scaffold = init_test_case(args) or init_meta(args)
-    scaffold.execute()
+    # scaffold = init_test_case(args) or init_meta(args)
+    # scaffold.execute()
     # except Exception as e:
     #     print(e)

@@ -8,8 +8,8 @@ FilePath: \eClinical4.0_testing\eClinical\service\etmf_login_service.py
 '''
 import cjen
 
-from eclinical.environment.environment import Environment
-from eclinical.service._sponsor_login_service import _SponsorLoginService
+from environment.environment import Environment
+from service._sponsor_login_service import _SponsorLoginService
 
 
 class ETMFLoginService(_SponsorLoginService):

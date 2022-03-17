@@ -1,9 +1,10 @@
 import time
 
 import cjen
+import eclinical
 import jsonpath
 from cjen import BigTangerine
-import eclinical
+
 from eclinical.utils.ecrypto import Ecrypto
 
 

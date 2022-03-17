@@ -1,7 +1,7 @@
 import cjen
 
-from eclinical.environment.environment import Environment
-from eclinical.service._study_login_service import _StudyLoginService
+from environment.environment import Environment
+from service._study_login_service import _StudyLoginService
 
 
 class IWRSLoginService(_StudyLoginService):
