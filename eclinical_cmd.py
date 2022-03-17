@@ -39,13 +39,13 @@ class Service:
     def application(self): return self.app
 
     def output_conftest_py(self, f: IO):
-        f.write(f"from service.{self.name} import {clazz_name(self.name)}\n\n\n")
+        f.write(f"from .service.{self.name} import {clazz_name(self.name)}\n\n\n")
         f.write("@pytest.fixture \n")
         f.write(f"def {self.name}(ef, st):\n")
         f.write(f"\treturn {clazz_name(self.name)}(Environment(envir=st, file_path=ef))\n\n\n")
 
     def output_init_py(self, f: IO):
-        f.write(f"from {self.name} import {clazz_name(self.name)}\n")
+        f.write(f"from .{self.name} import {clazz_name(self.name)}\n")
 
     def output_service_py(self, f: IO):
         f.write("""
