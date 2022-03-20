@@ -7,7 +7,7 @@ class Text:
 
     def __repr__(self):
         if self.default:
-            return f"{self.msg}, 如使用默认值[{self.default},请按{self.default_key}]"
+            return f"{self.msg}, 如使用[{self.default},请按{self.default_key}]"
         return self.msg
 
     def get(self, value):
