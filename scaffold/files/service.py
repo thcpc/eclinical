@@ -16,8 +16,7 @@ class Service:
     def application_clazz(self):
         clazz = dict(etmf="ETMFLoginService", pv="PVLoginService", ctms="CTMSLoginService", edc="EdcLoginService",
                      iwrs="IWRSLoginService", design="DesignLoginService", portal="PortalLoginService",
-                     portaladmin="PortalAdministratorLoginService").get(self.application.lower())
-        if clazz is None: raise Exception(f"不支持 {self.application} ")
+                     portaladmin="PortalAdministratorLoginService").get(self.application.lower(), "BigTangerine")
         return clazz
 
     def output_conftest_py(self):
@@ -28,10 +27,12 @@ class Service:
     def output_init_py(self): return f"from .{self.file_name} import {self.clazz_name}\n"
 
     def output_service_py(self):
+        # TODO 修改添加的BigTangerine的导入
         return "import cjen\n\n" + \
                f"from eclinical import {self.clazz_name}, Environment\n\n"+\
                f"class {self.clazz_name}({self.application_clazz}):\n"+\
                f"\tdef __init__(self, environment: Environment):\n"+\
-               f"\tsuper().__init__(environment)\n"
+               f"\tsuper().__init__(environment)\n" +\
+               f"\tself.context['cursor'] = " # TODO 添加数据库的代码
 
 
