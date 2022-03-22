@@ -1,5 +1,5 @@
 # from scaffold.command.edk import Edk
-from scaffold.elements.component.radio import Radio
+from scaffold.inputs.component.radio import Radio
 
 
 class EclinicalUri:

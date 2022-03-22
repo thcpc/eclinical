@@ -1,5 +1,5 @@
 # from scaffold.command.edk import Edk
-from scaffold.elements.component.text import Text
+from scaffold.inputs.component.text import Text
 
 
 class EnvironmentName:

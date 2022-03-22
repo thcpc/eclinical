@@ -1,4 +1,4 @@
-from scaffold.elements.component.radio import Radio
+from scaffold.inputs.component.radio import Radio
 
 
 class LifeCycle:

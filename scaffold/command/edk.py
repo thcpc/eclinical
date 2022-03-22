@@ -4,17 +4,17 @@ import shutil
 
 from ruamel import yaml
 
-from scaffold.elements.account import Account
-from scaffold.elements.company import Company
-from scaffold.elements.db_host import DBHost
-from scaffold.elements.eclinical_uri import EclinicalUri
-from scaffold.elements.environment_name import EnvironmentName
-from scaffold.elements.life_cycle import LifeCycle
-from scaffold.elements.pass_word import PassWord
-from scaffold.elements.port import Port
-from scaffold.elements.schema import Schema
-from scaffold.elements.sponsor import Sponsor
-from scaffold.elements.study import Study
+from scaffold.inputs.account import Account
+from scaffold.inputs.company import Company
+from scaffold.inputs.db_host import DBHost
+from scaffold.inputs.eclinical_uri import EclinicalUri
+from scaffold.inputs.environment_name import EnvironmentName
+from scaffold.inputs.life_cycle import LifeCycle
+from scaffold.inputs.pass_word import PassWord
+from scaffold.inputs.port import Port
+from scaffold.inputs.schema import Schema
+from scaffold.inputs.sponsor import Sponsor
+from scaffold.inputs.study import Study
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-init", action='store_true', help="初始化整个项目，包括生成environment.yaml，全局的conftest")
