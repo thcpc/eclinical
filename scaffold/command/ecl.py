@@ -9,6 +9,7 @@ from scaffold.inputs.ecl.module_type import ModuleType
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-init", action='store_true', help="初始化一个module，包括生成environment.yaml，全局的conftest")
+parser.add_argument("-nos", action='store_true', help="执行初始化module时，如果带这个参数，表明不包好service")
 args = parser.parse_args()
 
 
@@ -27,8 +28,9 @@ class Ecl:
         for service_name in service_names.split(","):
             service = Service(service_name, app)
             # 输出到service.py
-            self.rewrite_file("services", service.file_name, service.output_service_py()) \
-            or self.new_file("services", service.file_name, service.output_service_py())
+            if not os.path.exists(os.path.join(self.ecl_folder, "services")): os.mkdir(os.path.join(self.ecl_folder, "services"))
+            self.rewrite_file("services", service.file_name+".py", service.output_service_py()) \
+            or self.new_file("services", service.file_name+".py", service.output_service_py())
             # 输出到 __init__.py
             self.append_file("services", "__init__.py", service.output_init_py()) \
             or self.new_file("services", "__init__.py", service.output_init_py())
@@ -67,5 +69,10 @@ def ecl_command():
     if args.init:
         ecl = Ecl(ModuleName.input(), ModuleType.input())
         ecl.init_module()
-        for service_name in ModuleService.input():
-            ecl.add_service(service_name, Application.input(msg=f"{service_name}是什么系统"))
+        if not args.nos:
+            for service_name in ModuleService.input():
+                ecl.add_service(service_name, Application.input(msg=f"{service_name}是什么系统"))
+
+
+if __name__ == '__main__':
+    ecl_command()
