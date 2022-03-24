@@ -15,6 +15,9 @@ class GenService:
             if not os.path.exists(os.path.join(self.folder, "services")): os.mkdir(
                 os.path.join(self.folder, "services"))
             fop = FileOperate(self.folder)
+            if fop.file_exist("services", service.file_name):
+                if input(f"{service.service_name} 已存在，是否覆盖(Y/N)") == 'N':
+                    continue
             fop.rewrite_file("services", service.file_name + ".py", service.output_service_py()) \
             or fop.new_file("services", service.file_name + ".py", service.output_service_py())
             # 输出到 __init__.py

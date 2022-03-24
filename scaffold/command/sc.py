@@ -4,6 +4,7 @@ import os
 
 from scaffold.files.gen_service import Service, GenService
 from scaffold.inputs.application import Application
+from scaffold.template.file_operate import FileOperate
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-name", help="创建或更新的 service 名")
