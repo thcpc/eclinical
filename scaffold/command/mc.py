@@ -13,7 +13,7 @@ parser.add_argument("--attrs", help="对象属性，多个属性以,分割")
 
 args = parser.parse_args()
 
-
+# TODO 在 meta 中增加帮助示例
 class Mc:
 
     def __init__(self):

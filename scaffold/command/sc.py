@@ -10,7 +10,8 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-name", help="创建或更新的 service 名")
 args = parser.parse_args()
 
-
+# TODO name 修改为输入项
+# TODO 在 service 中增加帮助示例
 class Sc:
     def __init__(self, name):
         self.name = name

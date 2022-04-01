@@ -13,7 +13,7 @@ parser.add_argument("-init", action='store_true', help="初始化一个module，
 parser.add_argument("-ns", action='store_true', help="执行初始化module时，如果带这个参数，表明创建Module 同时创建 service")
 args = parser.parse_args()
 
-
+# Todo 如果是test case 默认增加一个meta ok_response
 class Ecl:
 
     def __init__(self, name=None, module_type=None):
