@@ -1,8 +1,8 @@
 import os
 
-from scaffold.inputs.mc.meta_service import MetaService
-from scaffold.template.file_operate import FileOperate
-from scaffold.template.meta import Meta
+from eclinical.scaffold.inputs.mc.meta_service import MetaService
+from eclinical.scaffold.template.file_operate import FileOperate
+from eclinical.scaffold.template.meta import Meta
 
 
 class GemMeta:

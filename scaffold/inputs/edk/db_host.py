@@ -1,4 +1,4 @@
-from scaffold.inputs.component.text import Text
+from eclinical.scaffold.inputs.component.text import Text
 
 
 class DBHost:

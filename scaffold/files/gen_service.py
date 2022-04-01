@@ -1,7 +1,7 @@
 import os
 
-from scaffold.template.file_operate import FileOperate
-from scaffold.template.service import Service
+from eclinical.scaffold.template.file_operate import FileOperate
+from eclinical.scaffold.template.service import Service
 
 
 class GenService:

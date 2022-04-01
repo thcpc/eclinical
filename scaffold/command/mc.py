@@ -1,10 +1,10 @@
 import argparse
 import os
 
-from scaffold.files.gen_meta import GemMeta
-from scaffold.inputs.mc.meta_attrs import MetaAttrs
-from scaffold.inputs.mc.meta_name import MetaName
-from scaffold.inputs.mc.meta_type import MetaType
+from eclinical.scaffold.files.gen_meta import GemMeta
+from eclinical.scaffold.inputs.mc.meta_attrs import MetaAttrs
+from eclinical.scaffold.inputs.mc.meta_name import MetaName
+from eclinical.scaffold.inputs.mc.meta_type import MetaType
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--name", help="创建meta 对象")

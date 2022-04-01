@@ -4,17 +4,17 @@ import shutil
 
 from ruamel import yaml
 
-from scaffold.inputs.edk.account import Account
-from scaffold.inputs.edk.company import Company
-from scaffold.inputs.edk.db_host import DBHost
-from scaffold.inputs.edk.eclinical_uri import EclinicalUri
-from scaffold.inputs.edk.environment_name import EnvironmentName
-from scaffold.inputs.edk.life_cycle import LifeCycle
-from scaffold.inputs.edk.pass_word import PassWord
-from scaffold.inputs.edk.port import Port
-from scaffold.inputs.edk.schema import Schema
-from scaffold.inputs.edk.sponsor import Sponsor
-from scaffold.inputs.edk.study import Study
+from eclinical.scaffold.inputs.edk.account import Account
+from eclinical.scaffold.inputs.edk.company import Company
+from eclinical.scaffold.inputs.edk.db_host import DBHost
+from eclinical.scaffold.inputs.edk.eclinical_uri import EclinicalUri
+from eclinical.scaffold.inputs.edk.environment_name import EnvironmentName
+from eclinical.scaffold.inputs.edk.life_cycle import LifeCycle
+from eclinical.scaffold.inputs.edk.pass_word import PassWord
+from eclinical.scaffold.inputs.edk.port import Port
+from eclinical.scaffold.inputs.edk.schema import Schema
+from eclinical.scaffold.inputs.edk.sponsor import Sponsor
+from eclinical.scaffold.inputs.edk.study import Study
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-init", action='store_true', help="初始化整个项目，包括生成environment.yaml，全局的conftest")
@@ -98,5 +98,5 @@ def edk_command():
         print(e)
 
 
-if __name__ == '__main__':
-    edk_command()
+# if __name__ == '__main__':
+#     edk_command()

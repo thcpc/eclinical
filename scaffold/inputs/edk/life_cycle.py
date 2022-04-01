@@ -1,4 +1,4 @@
-from scaffold.inputs.component.radio import Radio
+from eclinical.scaffold.inputs.component.radio import Radio
 
 
 class LifeCycle:
