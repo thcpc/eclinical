@@ -28,12 +28,15 @@ class Mc:
 
 
 def mc_command():
-    mc = Mc()
-    mc.right_path()
-    mc.meta(args.name or MetaName().input(),
-            args.type or MetaType().input(),
-            args.attrs or MetaAttrs().input())
+    try:
+        mc = Mc()
+        mc.right_path()
+        mc.meta(args.name or MetaName().input(),
+                args.type or MetaType().input(),
+                args.attrs or MetaAttrs().input())
+    except Exception as e:
+        print(e)
 
 
-if __name__ == '__main__':
-    mc_command()
+# if __name__ == '__main__':
+#     mc_command()

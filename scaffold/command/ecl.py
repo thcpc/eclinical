@@ -43,5 +43,5 @@ def ecl_command():
                 # ecl.add_service(service_name, Application.input(msg=f"{service_name}是什么系统"))
 
 
-if __name__ == '__main__':
-    ecl_command()
+# if __name__ == '__main__':
+#     ecl_command()

@@ -22,10 +22,12 @@ class Sc:
 
 
 def sc_command():
-    sc = Sc(args.name)
-    sc.path_right()
-    GenService(sc.folder).add_service(args.name, Application.input(msg=f"{args.name}是什么系统"))
+    try:
+        sc = Sc(args.name)
+        sc.path_right()
+        GenService(sc.folder).add_service(args.name, Application.input(msg=f"{args.name}是什么系统"))
+    except Exception as e:
+        print(e)
 
-
-if __name__ == '__main__':
-    sc_command()
+# if __name__ == '__main__':
+#     sc_command()
