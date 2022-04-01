@@ -34,7 +34,7 @@ class Edk:
                         self.environment_path)
 
     def generate_conftest(self):
-        shutil.copyfile(os.path.join(os.path.dirname(__file__), "resource", "global_conftest"), self.conftest_path)
+        shutil.copyfile(os.path.join(os.path.dirname(__file__), "resource", "global_conftest.txt"), self.conftest_path)
 
     def add_environment(self, name: str, environment: dict):
         with open(self.environment_path, 'r', encoding="utf-8") as f:
