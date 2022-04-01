@@ -1,4 +1,5 @@
 import argparse
+import os
 
 from scaffold.files.gen_meta import GemMeta
 from scaffold.inputs.mc.meta_attrs import MetaAttrs
@@ -15,16 +16,24 @@ args = parser.parse_args()
 
 class Mc:
 
+    def __init__(self):
+        self.folder = os.getcwd()
+
     def meta(self, meta_name, meta_type, meta_attrs):
-        GemMeta().add_meta(meta_name, meta_type, meta_attrs)
+        GemMeta(self.folder).add_meta(meta_name, meta_type, meta_attrs)
+
+    def right_path(self):
+        if not os.path.exists(os.path.join(self.folder, "meta")):
+            raise "没有找到meta文件夹,请确认是在module 文件夹下"
 
 
 def mc_command():
-    try:
-        mc = Mc()
-        mc.meta(args.name or MetaName().input(),
-                args.type or MetaType().input(),
-                args.attrs or MetaAttrs().input())
+    mc = Mc()
+    mc.right_path()
+    mc.meta(args.name or MetaName().input(),
+            args.type or MetaType().input(),
+            args.attrs or MetaAttrs().input())
 
-    except Exception as e:
-        print(e)
+
+if __name__ == '__main__':
+    mc_command()

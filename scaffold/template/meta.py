@@ -14,9 +14,11 @@ class Meta:
             content += f"\t@cjen.operate.common.value\n"
             content += f"\t@cjen.operate.json.one(json_path=\"请填写jsonpath\")\n"
             content += f"\tdef {prop}(self): ...\n\n"
+        return content
 
     def mysql(self):
         content = "import cjen\nfrom cjen import MetaMysql\n\n\n" + f"class {self.clazz_name}(MetaMysql):\n"
         for prop in self.props:
             content += f"\t@cjen.operate.common.value\n"
             content += f"\tdef {prop}(self): ...\n\n"
+        return content

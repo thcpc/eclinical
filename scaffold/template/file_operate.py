@@ -8,7 +8,7 @@ class FileOperate:
     def rewrite_file(self, sub_folder, file_name, content):
         if self.file_exist(sub_folder, file_name):
             re_write = input(f"{file_name} 已存在,是否覆盖(Y/N)")
-            if re_write.lower() == 'Y':
+            if re_write.lower() == 'y':
                 with open(os.path.join(self.folder, sub_folder, file_name), 'w', encoding="utf-8") as f:
                     f.write(content)
             return True

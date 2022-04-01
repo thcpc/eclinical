@@ -1,18 +1,34 @@
 import os
 
+from scaffold.inputs.mc.meta_service import MetaService
 from scaffold.template.file_operate import FileOperate
 from scaffold.template.meta import Meta
 
 
 class GemMeta:
-    def __init__(self, folder): self.folder = folder
+    def __init__(self, folder):
+        self.folder = folder
 
-    def add_meta(self, meta_name: str, meta_type: str, props: str):
-        meta = Meta(meta_name, props.split(","))
-        if not os.path.exists(os.path.join(self.folder, "meta")):
-            os.mkdir(os.path.join(self.folder, "meta"))
+    def add_meta(self, meta_name: str, meta_type: str, props: list[str]):
+        meta = Meta(meta_name, props)
         fop = FileOperate(self.folder)
-        body = meta.json() if meta_type == 'json' else meta.mysql()
-        fop.rewrite_file("meta", meta.name + ".py", body) \
-        or fop.new_file("meta", meta.name + ".py", body)
-        # 输出到 __init__.py TODO 输出meta下的__init__
+
+        service = self.belong_service()
+
+        body = meta.json() if meta_type == 'Json' else meta.mysql()
+
+        sub_folder = os.path.join("meta", service) if service is not None else "meta"
+        if not os.path.exists(os.path.join(self.folder, sub_folder)):
+            os.mkdir(os.path.join(self.folder, sub_folder))
+        fop.rewrite_file(sub_folder, meta.name + ".py", body) \
+        or fop.new_file(sub_folder, meta.name + ".py", body)
+
+    def belong_service(self):
+        services = ["不属于任何service"]
+        for root, folder, files in os.walk(os.path.join(self.folder, "service")):
+            for file in files:
+                if file.endswith("_service.py"):
+                    services.append(file.replace(".py", ""))
+        service = MetaService.input(select=tuple(services))
+        if service == "不属于任何service": return None
+        return service
