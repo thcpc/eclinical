@@ -1,4 +1,4 @@
-# TODO 自动生成service的例子
+
 class Service:
     def __init__(self, service_name, app):
         self.service_name = service_name
@@ -40,12 +40,16 @@ class Service:
 
         if self.application_clazz == "BigTangerine":
             import_str = "import cjen\n\nfrom cjen import BigTangerine,DatabasePool\nfrom eclinical import Environment\n\n\n"
-            super_str = "\t\tsuper().__init__()\n"
+            super_str = "        super().__init__()\n"
         else:
             import_str = f"import cjen\n\nfrom cjen import DatabasePool\nfrom eclinical import {self.application_clazz}, Environment\n\n\n"
-            super_str = "\t\tsuper().__init__(environment)\n"
+            super_str = "        super().__init__(environment)\n"
         return import_str + \
                f"class {self.clazz_name}({self.application_clazz}):\n" + \
-               f"\tdef __init__(self, environment: Environment):\n" + \
+               "    \"\"\"\n    相关使用详情可查询:\n" \
+               "    http 装饰器: https://github.com/thcpc/cjen#432-http-%E8%A3%85%E9%A5%B0%E5%99%A8\n" +\
+               "    数据构造 装饰器: https://github.com/thcpc/cjen#433-factory-%E8%A3%85%E9%A5%B0%E5%99%A8\n " + \
+               "    \"\"\"\n\n" + \
+               f"    def __init__(self, environment: Environment):\n" + \
                super_str + \
-               f"\t\tself.context['cursor'] = DatabasePool.cursor(host=environment.db.get(\"host\"), user=environment.db.get(\"user\"), pwd=environment.db.get(\"pwd\"), port=environment.db.get(\"port\"), database=environment.db.get(\"database\"))\n\n"
+               f"        self.context['cursor'] = DatabasePool.cursor(host=environment.db.get(\"host\"), user=environment.db.get(\"user\"), pwd=environment.db.get(\"pwd\"), port=environment.db.get(\"port\"), database=environment.db.get(\"database\"))\n\n"

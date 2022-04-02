@@ -1,17 +1,17 @@
 import argparse
 import os
 
-
-from eclinical.scaffold.files.gen_service import Service, GenService
+from eclinical.scaffold.files.gen_service import GenService
 from eclinical.scaffold.inputs.application import Application
-from eclinical.scaffold.template.file_operate import FileOperate
+
+# from scaffold.files.gen_service import GenService
+from eclinical.scaffold.inputs.sc.service_name import ServiceName
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-name", help="创建或更新的 service 名")
 args = parser.parse_args()
 
-# TODO name 修改为输入项
-# TODO 在 service 中增加帮助示例
+
 class Sc:
     def __init__(self, name):
         self.name = name
@@ -24,9 +24,10 @@ class Sc:
 
 def sc_command():
     try:
-        sc = Sc(args.name)
+        name = args.name or ServiceName.input()
+        sc = Sc(name)
         sc.path_right()
-        GenService(sc.folder).add_service(args.name, Application.input(msg=f"{args.name}是什么系统"))
+        GenService(sc.folder).add_service(name, Application.input(msg=f"{name}是什么系统"))
     except Exception as e:
         print(e)
 

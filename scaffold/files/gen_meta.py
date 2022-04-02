@@ -23,6 +23,22 @@ class GemMeta:
         fop.rewrite_file(sub_folder, meta.name + ".py", body) \
         or fop.new_file(sub_folder, meta.name + ".py", body)
 
+    @classmethod
+    def ok_response(cls, folder: str):
+        body = """
+import cjen
+from cjen import MetaJson
+
+
+class OKResponse(MetaJson):
+    @cjen.operate.asserts.equal(value=200)
+    @cjen.operate.json.one(json_path="$.procCode")
+    def procCode(self): ...
+"""
+        fop = FileOperate(folder)
+        fop.rewrite_file("meta", "ok_response.py", body) \
+        or fop.new_file("meta", "ok_response.py", body)
+
     def belong_service(self):
         services = ["不属于任何service"]
         for root, folder, files in os.walk(os.path.join(self.folder, "service")):
