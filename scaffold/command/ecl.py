@@ -1,19 +1,21 @@
 import argparse
 import os
 
-from eclinical.scaffold.files.gen_service import Service, GenService
+from eclinical.scaffold.files.gen_service import GenService
 from eclinical.scaffold.inputs.application import Application
 from eclinical.scaffold.inputs.ecl.module_name import ModuleName
 from eclinical.scaffold.inputs.ecl.module_service import ModuleService
 from eclinical.scaffold.inputs.ecl.module_type import ModuleType
 from eclinical.scaffold.template.file_operate import FileOperate
+from eclinical.scaffold.files.gen_meta import GemMeta
+from eclinical.scaffold.template.service import Service
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-init", action='store_true', help="初始化一个module，包括生成environment.yaml，全局的conftest")
 parser.add_argument("-ns", action='store_true', help="执行初始化module时，如果带这个参数，表明创建Module 同时创建 service")
 args = parser.parse_args()
 
-# Todo 如果是test case 默认增加一个meta ok_response
+
 class Ecl:
 
     def __init__(self, name=None, module_type=None):
@@ -30,6 +32,7 @@ class Ecl:
         FileOperate(self.ecl_folder).new_file("", "__init__.py", "")
         if self.module_type == "testcase":
             FileOperate(self.ecl_folder).new_file("", "conftest.py", Service.output_conftest_header_py())
+            GemMeta.ok_response(self.ecl_folder)
 
 
 def ecl_command():
@@ -42,6 +45,5 @@ def ecl_command():
                 gen.add_service(service_name, Application.input(msg=f"{service_name}是什么系统"))
                 # ecl.add_service(service_name, Application.input(msg=f"{service_name}是什么系统"))
 
-
-# if __name__ == '__main__':
-#     ecl_command()
+if __name__ == '__main__':
+    ecl_command()
