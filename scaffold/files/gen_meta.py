@@ -3,6 +3,7 @@ import os
 from eclinical.scaffold.inputs.mc.meta_service import MetaService
 from eclinical.scaffold.template.file_operate import FileOperate
 from eclinical.scaffold.template.meta import Meta
+# from scaffold.template.meta import Meta
 
 
 class GemMeta:
@@ -41,7 +42,7 @@ class OKResponse(MetaJson):
 
     def belong_service(self):
         services = ["不属于任何service"]
-        for root, folder, files in os.walk(os.path.join(self.folder, "service")):
+        for root, folder, files in os.walk(os.path.join(self.folder, "services")):
             for file in files:
                 if file.endswith("_service.py"):
                     services.append(file.replace(".py", ""))

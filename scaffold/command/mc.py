@@ -2,6 +2,7 @@ import argparse
 import os
 
 from eclinical.scaffold.files.gen_meta import GemMeta
+# from scaffold.files.gen_meta import GemMeta
 from eclinical.scaffold.inputs.mc.meta_attrs import MetaAttrs
 from eclinical.scaffold.inputs.mc.meta_name import MetaName
 from eclinical.scaffold.inputs.mc.meta_type import MetaType
