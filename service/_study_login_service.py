@@ -12,7 +12,7 @@ class _StudyLoginService(_LoginService):
         self.auth(data=self.user_pwd())
         self.__cross_user() or self.__normal_user()
         self.user_onboard(
-            data={k: v for k, v in self.context.select.items() if
+            data={k: v for k, v in self.context.content.items() if
                   k in ["applicationId", "sponsorId", "studyId", "envId", "workForCompanyId"]})
 
     def __cross_user(self):

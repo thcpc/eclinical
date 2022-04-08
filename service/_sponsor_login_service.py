@@ -13,7 +13,7 @@ class _SponsorLoginService(_LoginService):
         self.__cross_user() or self.__normal_user()
 
         self.user_onboard(
-            data={k: v for k, v in self.context.select.items() if
+            data={k: v for k, v in self.context.content.items() if
                   k in ["applicationId", "sponsorId", "envId", "workForCompanyId"]})
 
     def __cross_user(self):
