@@ -23,7 +23,7 @@ class Proxy:
         # 启用代理
         self.set_key('ProxyEnable', 1, winreg.REG_DWORD)  # 启用
         self.set_key('ProxyOverride', u'*.local;<local>', winreg.REG_SZ)  # 绕过本地
-        self.set_key('ProxyServer', u'127.0.0.1:8888', winreg.REG_SZ)  # 代理IP及端口，将此代理修改为自己的代理IP
+        self.set_key('ProxyServer', u'127.0.0.1:9999', winreg.REG_SZ)  # 代理IP及端口，将此代理修改为自己的代理IP
 
     def close(self):
         self.set_key('ProxyEnable', 0, winreg.REG_DWORD)  # 停用

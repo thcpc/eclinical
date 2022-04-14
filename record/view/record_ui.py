@@ -8,8 +8,9 @@ from mitmproxy.tools.main import mitmweb
 # from record.parameter import Parameter
 # from record.record_service import RecordService
 from record.ext.common import disable_elements, enable_elements, empty_string
+from record.ext.memcached import memcached
 from record.ext.proxy import Proxy, win_proxy
-from record.mitm.mitm_process import MitmProcess, mitm_process
+from record.mitm.mitm_process import MitmProcess
 from record.view.alert_dialog import AlertDialog
 from record.view.status import Status
 
@@ -20,15 +21,17 @@ from record.view.status import Status
 # TODO 配置读取Enviroment文件
 class RecordUi(wx.Frame):
 
-    def __init__(self, parent):
+    def __init__(self, parent, envirs):
         self.status_list = [Status.INIT]
         self.proxy = Proxy()
         self.record_service = None
+        self.envirs = envirs
+        # height = len(envirs) * 35
         wx.Frame.__init__(self, parent, id=wx.ID_ANY, title="接口录制", pos=wx.DefaultPosition,
-                          size=wx.Size(326, 207), style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
+                          size=wx.Size(self.width(), self.height()), style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
 
-        self.SetSizeHints(wx.Size(326, 207), wx.Size(326, 207))
-
+        self.SetSizeHints(wx.Size(self.width(), self.height()), wx.Size(self.width(), self.height()))
+        self.mitm_process = None
         fgSizer1 = wx.FlexGridSizer(4, 2, 0, 0)
         fgSizer1.SetFlexibleDirection(wx.BOTH)
         fgSizer1.SetNonFlexibleGrowMode(wx.FLEX_GROWMODE_SPECIFIED)
@@ -40,7 +43,7 @@ class RecordUi(wx.Frame):
 
         # fgSizer1.Add(self.m_staticText41, 0, wx.ALL, 5)
 
-        m_listBox2Choices = ["200.200.101.113", "200.200.101.97", "200.200.101.115", "200.200.101.38"]
+        m_listBox2Choices = [name for name in envirs.keys()]
         self.m_listBox2 = wx.ListBox(self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, m_listBox2Choices, 0)
 
         fgSizer1.Add(self.m_listBox2, 0, wx.ALL, 5)
@@ -61,15 +64,15 @@ class RecordUi(wx.Frame):
         self.stop_button.Disable()
         fgSizer1.Add(self.stop_button, 0, wx.ALL, 5)
 
-        self.upload_button = wx.Button(self, wx.ID_ANY, u"上传", wx.DefaultPosition, wx.DefaultSize, 0)
-        self.upload_button.Disable()
-
-        fgSizer1.Add(self.upload_button, 0, wx.ALL, 5)
-        self.m_dirPicker1 = wx.DirPickerCtrl(self, wx.ID_ANY, wx.EmptyString, u"请选择文件夹", wx.DefaultPosition,
-                                             wx.DefaultSize,
-                                             wx.DIRP_DEFAULT_STYLE)
-        fgSizer1.Add(self.m_dirPicker1, 0, wx.ALL, 5)
-
+        # self.upload_button = wx.Button(self, wx.ID_ANY, u"上传", wx.DefaultPosition, wx.DefaultSize, 0)
+        # self.upload_button.Disable()
+        #
+        # fgSizer1.Add(self.upload_button, 0, wx.ALL, 5)
+        # self.m_dirPicker1 = wx.DirPickerCtrl(self, wx.ID_ANY, wx.EmptyString, u"请选择文件夹", wx.DefaultPosition,
+        #                                      wx.DefaultSize,
+        #                                      wx.DIRP_DEFAULT_STYLE)
+        # fgSizer1.Add(self.m_dirPicker1, 0, wx.ALL, 5)
+        #
         self.SetSizer(fgSizer1)
         self.Layout()
 
@@ -77,11 +80,32 @@ class RecordUi(wx.Frame):
         # Connect Events
         self.start_button.Bind(wx.EVT_LEFT_UP, self.evt_start_up)
         self.stop_button.Bind(wx.EVT_LEFT_UP, self.evt_shut_down)
-        self.m_dirPicker1.Bind(wx.EVT_DIRPICKER_CHANGED, self.evt_select_folder)
-        self.upload_button.Bind(wx.EVT_LEFT_UP, self.evt_upload_test)
+        # self.m_dirPicker1.Bind(wx.EVT_DIRPICKER_CHANGED, self.evt_select_folder)
 
     def __del__(self):
         pass
+
+    def height(self):
+        if len(self.envirs) * 25 + 200 > 326: return 326
+        return len(self.envirs) * 10 + 200
+
+    def width(self):
+        max_item = 0
+
+        def chinese(ch):
+            return '\u4e00' <= ch <= '\u9fff'
+
+        for value in self.envirs.keys():
+            item = 0
+            for ch in value:
+                if chinese(ch):
+                    item += 18
+                else:
+                    item += 8
+            if item > max_item:
+                max_item = item
+        if max_item + 112 > 256: return max_item + 112 + 30
+        return 256
 
     def change_status(self, new_status, msg=None):
         self.__append(new_status)
@@ -124,22 +148,22 @@ class RecordUi(wx.Frame):
         self.change_status(Status.PREPARE_RECORDING)
         self.change_status(Status.RECORDING)
         if self.validation_record():
-            # TODO 要拦截的参数设置
-            Parameter().set(host=self.parameter_host(), test=self.parameter_test_name())
+            memcached.set("host", self.parameter_host())
+            memcached.set("folder", self.parameter_test_name())
             self.service_record_start()
 
     def evt_shut_down(self, event):
         self.change_status(Status.RECORDING_FINISH)
         self.service_record_stop()
 
-    def evt_select_folder(self, event):
-        self.change_status(Status.PREPARE_UPLOADING)
-
-    def validation_upload(self):
-        if empty_string(self.m_dirPicker1.GetPath()):
-            self.change_status(Status.ERROR, u"测试的数据文件不正确")
-            return False
-        return True
+    # def evt_select_folder(self, event):
+    #     self.change_status(Status.PREPARE_UPLOADING)
+    #
+    # def validation_upload(self):
+    #     if empty_string(self.m_dirPicker1.GetPath()):
+    #         self.change_status(Status.ERROR, u"测试的数据文件不正确")
+    #         return False
+    #     return True
 
     def validation_record(self):
         if self.m_listBox2.GetSelection() == -1:
@@ -151,21 +175,13 @@ class RecordUi(wx.Frame):
             return False
         return True
 
-    def evt_upload_test(self, event):
-        self.change_status(Status.PREPARE_UPLOADING)
-        self.change_status(Status.UPLOADING)
-        if self.validation_upload():
-            self.service_upload()
-
     def ui_disable_running(self):
-        disable_elements(self.start_button, self.m_dirPicker1,
-                         self.test_name, self.m_listBox2,
-                         self.upload_button, self.stop_button)
+        disable_elements(self.start_button,
+                         self.test_name, self.m_listBox2, self.stop_button)
 
     def ui_enable_all(self):
-        enable_elements(self.start_button, self.m_dirPicker1,
-                        self.test_name, self.m_listBox2,
-                        self.upload_button, self.stop_button)
+        enable_elements(self.start_button,
+                        self.test_name, self.m_listBox2, self.stop_button)
 
     def status_evt(self, status, msg=None):
 
@@ -174,7 +190,7 @@ class RecordUi(wx.Frame):
             enable_elements(self.stop_button)
         elif status == Status.PREPARE_RECORDING:
             self.ui_enable_all()
-            disable_elements(self.upload_button)
+            # disable_elements(self.upload_button)
             disable_elements(self.stop_button)
         elif status == Status.ERROR:
             AlertDialog.open(self, msg)
@@ -192,17 +208,22 @@ class RecordUi(wx.Frame):
             disable_elements(self.stop_button)
 
     def parameter_host(self):
-        return self.m_listBox2.GetStringSelection()
+        return self.envirs.get(self.m_listBox2.GetStringSelection())
 
     def parameter_test_name(self):
         return self.test_name.GetValue()
 
     def service_record_start(self):
         win_proxy.open()
-        mitm_process.start()
+        self.get_mitm_process().start()
+        # mitm_process.start()
+
+    def get_mitm_process(self):
+        if self.mitm_process is None:
+            self.mitm_process = MitmProcess()
+        return self.mitm_process
 
     def service_record_stop(self):
         win_proxy.close()
-        mitm_process.stop()
-
-
+        self.get_mitm_process().stop()
+        self.mitm_process = None
