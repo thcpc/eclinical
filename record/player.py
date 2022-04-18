@@ -7,7 +7,6 @@ from view.record_ui import RecordUi
 import multiprocessing
 
 
-
 class Player:
 
     def ui(self, envirs: dict):
@@ -24,8 +23,9 @@ class Player:
     # TODO 文件的上传
     def response(self, flow: mitmproxy.http.HTTPFlow):
         if memcached.get("host") in flow.request.pretty_url:
-            with open(flow.request.path.replace("/", "_"), 'w') as f:
-                f.write(str(flow.request.content,'utf-8'))
+            if "user/permissions" in flow.request.pretty_url:
+                with open(flow.request.path.replace("/", "_"), 'w') as f:
+                    f.write(str(flow.response.content, 'utf-8'))
 
 
 if __name__ == "__main__":
