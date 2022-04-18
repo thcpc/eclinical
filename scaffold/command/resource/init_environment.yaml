@@ -3,7 +3,7 @@ ENV:
     uri: "http://host/api"
     user: "the account for login"
     password: "user login password"
-    publick_key: "have default value"
+    public_key: "have default value"
     company: "company_name or empty"
     sponsor: "sponsor_name"
     study: "study_name"
