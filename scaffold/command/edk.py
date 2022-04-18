@@ -41,7 +41,7 @@ class Edk:
             environments = yaml.load(f.read(), Loader=yaml.Loader)
             environments["ENV"][name] = environment
         with open(self.environment_path, 'w', encoding="utf-8") as f:
-            yaml.dump(environments, f, Dumper=yaml.RoundTripDumper)
+            yaml.dump(environments, f, Dumper=yaml.RoundTripDumper, allow_unicode=True)
 
     def environment_exist(self, name):
         with open(self.environment_path, 'r', encoding="utf-8") as f:
@@ -78,11 +78,11 @@ def edk_command():
             data["uri"] = EclinicalUri.input(edk)
             data["user"] = Account.input()
             data["password"] = PassWord.input("请输入用户名密码", "Admin@123", "回车")
-            data["publick_key"] = input("加密公钥\n")
+            data["public_key"] = input("加密公钥\n")
             data["company"] = Company.input("请输入公司名", "非Cross账号", "回车")
 
             data["sponsor"] = Sponsor.input()
-            data["study"] = Study.input("请输入实验名", "ctms, pv, etmf", "回车")
+            data["study"] = Study.input("请输入实验名", "ctms,pv,etmf", "回车")
             data["life_cycle"] = LifeCycle.input()
             if not args.no_db:
                 data["db"] = dict()
@@ -98,5 +98,5 @@ def edk_command():
         print(e)
 
 
-# if __name__ == '__main__':
-#     edk_command()
+if __name__ == '__main__':
+    edk_command()

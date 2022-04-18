@@ -17,6 +17,7 @@ class Text:
                 return self.get(input(f"{self}\n"))
             else:
                 return value
+        elif value == self.mapping.get(self.default_key, self.default_key):
+            return self.default
         else:
-            if value == self.mapping.get(self.default_key, self.default_key):
-                return self.default
+            return value
