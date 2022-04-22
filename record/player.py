@@ -1,9 +1,11 @@
+import os.path
+
 import mitmproxy
 import wx.xrc
 import yaml
 
-from record.ext.memcached import memcached
-from view.record_ui import RecordUi
+from eclinical.record.ext.memcached import memcached
+from eclinical.record.view.record_ui import RecordUi
 import multiprocessing
 
 
@@ -29,7 +31,7 @@ class Player:
 
 
 if __name__ == "__main__":
-    with open("environment.yaml", "r", encoding="utf-8") as f:
+    with open(os.path.join(os.path.dirname(os.getcwd()), "environment.yaml"), "r", encoding="utf-8") as f:
         envirs = {name: env.get("uri") for name, env in yaml.load(f.read(), Loader=yaml.FullLoader).get("ENV").items()}
     # print(envirs)
     # envirs = {"1111111111111111111111111111111111111111111111111111111111111111111111111":"2222"}

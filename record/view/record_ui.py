@@ -7,12 +7,12 @@ from mitmproxy.tools.main import mitmweb
 
 # from record.parameter import Parameter
 # from record.record_service import RecordService
-from record.ext.common import disable_elements, enable_elements, empty_string
-from record.ext.memcached import memcached
-from record.ext.proxy import Proxy, win_proxy
-from record.mitm.mitm_process import MitmProcess
-from record.view.alert_dialog import AlertDialog
-from record.view.status import Status
+from eclinical.record.ext.common import disable_elements, enable_elements, empty_string
+from eclinical.record.ext.memcached import memcached
+from eclinical.record.ext.proxy import Proxy, win_proxy
+from eclinical.record.mitm.mitm_process import MitmProcess
+from eclinical.record.view.alert_dialog import AlertDialog
+from eclinical.record.view.status import Status
 
 
 # from test import mock_upload, mock_upload_error, mock_record_error
@@ -48,12 +48,13 @@ class RecordUi(wx.Frame):
 
         fgSizer1.Add(self.m_listBox2, 0, wx.ALL, 5)
 
-        self.m_staticText4 = wx.StaticText(self, wx.ID_ANY, u"测试内容", wx.DefaultPosition, wx.DefaultSize, 0)
+        self.m_staticText4 = wx.StaticText(self, wx.ID_ANY, u"Json存放路径", wx.DefaultPosition, wx.DefaultSize, 0)
         self.m_staticText4.Wrap(-1)
 
         fgSizer1.Add(self.m_staticText4, 0, wx.ALL, 5)
 
-        self.test_name = wx.TextCtrl(self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0)
+        self.test_name = wx.TextCtrl(self, wx.ID_ANY, "ecd", wx.DefaultPosition, wx.DefaultSize, 0)
+        self.test_name.Disable()
         fgSizer1.Add(self.test_name, 0, wx.ALL, 5)
 
         self.start_button = wx.Button(self, wx.ID_ANY, u"启动", wx.DefaultPosition, wx.DefaultSize, 0)

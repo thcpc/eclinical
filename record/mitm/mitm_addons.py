@@ -1,5 +1,5 @@
 
 
-from record.player import Player
+from eclinical.record.player import Player
 
 addons = [Player()]
