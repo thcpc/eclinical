@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+from urllib.parse import urlparse
 
 import wx
 import wx.xrc
@@ -216,6 +216,8 @@ class RecordUi(wx.Frame):
 
     def service_record_start(self):
         win_proxy.open()
+        self.get_mitm_process().set_host(urlparse(self.parameter_host()).hostname)
+
         self.get_mitm_process().start()
         # mitm_process.start()
 
