@@ -53,13 +53,12 @@ class Edk:
     @property
     def eclinical_serve(self):
         return {"113": "http://200.200.101.113/api",
-                "97": "http://200.200.101.97/api",
-                "115": "http://200.200.101.115/api",
-                "38": "http://200.200.101.38/api",
+                "test-01": "http://52.82.79.202:81/api",
+                "dev-01": "http://161.189.155.243:81/api",
+                "dev-02": "http://161.189.5.162:81/api",
+                "dev-03": "http://52.82.113.74:81/api",
                 "us_dev": "https://ec.eclinical-dev.edetekapps.com/api",
-                "us_prod": "https://ec.eclinical.edetekapps.com/api",
-                "us_demo4": "https://ec4.ec4demo.edetekapps.com/api",
-                "shenkang_prod": "https://crip-ec.shdc.org.cn/api"}
+                "us_demo4": "https://ec4.ec4demo.edetekapps.com/api"}
 
 
 def edk_command():
