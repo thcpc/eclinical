@@ -1,15 +1,20 @@
-from cjen import BigTangerine
-
-
 class StandardStep:
-    def __int__(self, name, service: BigTangerine):
-        self.name = name
-        self.service = service
+    @property
+    def name(self): raise Exception("name need override")
 
-    def depend_step_names(self) ->list[str]: ...
+    def data(self): ...
+
+    def path_variable(self): ...
+
+    def call_back(self, **kwargs): ...
+
+    def _pre_processor(self): ...
+
+    def _post_processor(self): ...
 
     def _execute(self): ...
 
     def run(self):
+        self._pre_processor()
         self._execute()
-        return self.service
+        self._post_processor()
