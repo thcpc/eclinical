@@ -19,7 +19,7 @@ class MitmProcess(Process):
         # sys.argv = ['mitmdump','-q', '-s', os.path.join(os.path.dirname(__file__), "mitm_addons.py"), '-p',
         #             '9999', '--allow-hosts', f'.*{self.host}:80$', 'block_global=false']
         sys.argv = ['mitmdump','-q', '-s', os.path.join(os.path.dirname(__file__), "mitm_addons.py"), '-p',
-                    '9999', '--allow-hosts', f'.*52.82.79.202:81$', 'block_global=false']
+                    '9999', '--allow-hosts', f'.*dev-03-app-01.chengdudev.edetekapps.cn:81$', 'block_global=false']
         # argvs = [ '-s', os.path.join(os.path.dirname(__file__), "mitm_addons.py"), '-p',
         #             '9999', '--allow-hosts', '.*52.82.79.202:81$', '--set','block_global=false']
         mitmdump()

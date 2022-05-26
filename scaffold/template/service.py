@@ -1,4 +1,6 @@
 
+
+SPACE4 = "    "
 class Service:
     def __init__(self, service_name, app):
         self.service_name = service_name
@@ -53,3 +55,24 @@ class Service:
                f"    def __init__(self, environment: Environment):\n" + \
                super_str + \
                f"        self.context['cursor'] = DatabasePool.cursor(host=environment.db.get(\"host\"), user=environment.db.get(\"user\"), pwd=environment.db.get(\"pwd\"), port=environment.db.get(\"port\"), database=environment.db.get(\"database\"))\n\n"
+
+    def _method_name(self, api_url): pass
+
+    def _method_body(self, api_url, flow):
+        return f'{SPACE4}def  {self._method_name(api_url)}({self._method_args(api_url,flow)}, resp=None, **kwargs): ...\n'
+
+    def _decorator_http_name(self,flow): return "post_mapping"
+
+    def _method_decorator(self, api_url, flow):
+        return f'{SPACE4}@cjen.http.{self._decorator_http_name(flow)}(uri={api_url})'
+
+    def _method_args(self, api_url, flow):
+        if '{' in api_url and flow.request.body is not None: return "path_variable, data"
+        if '{' in api_url: return "path_variable"
+        if flow.request.body is not None: return "data"
+
+    def output_method(self, api_url, flow):
+        return f'{self._method_decorator(api_url, flow)}\n{self._method_body(api_url, flow)}\n'
+
+        # annoation = f'    @cjen.http.post(uri={api_url})'
+        # method = f'    def {}'

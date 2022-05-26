@@ -23,13 +23,9 @@ from eclinical.scaffold.template.service import Service
 def create_service(func):
     def __inner__(self):
         if not os.path.exists(f'{self.service_template.file_name}.py'):
-            # logger = smile.log(path=os.path.curdir, file_name=, mode='w')
-            # logger.append_msg(msg=self.service_template.output_service_py())
             @cjen.haha(LogPath=os.path.curdir, LogName=f'{self.service_template.file_name}.py', Mode='a')
             def write(msg, io: IO):  io.write(msg)
             write(self.service_template.output_service_py())
-            # with open(f'{self.service_template.file_name}.py', 'w') as f:
-            #     f.write(self.service_template.output_service_py())
         func(self)
         return __inner__
 
@@ -69,5 +65,6 @@ class EclinicalService:
     def append_api(self):
         @cjen.haha(LogPath=os.path.curdir, LogName=f'{self.service_template.file_name}.py', Mode='a')
         def write(msg, io: IO):  io.write(msg)
-        write(self.api_url + "\n")
+        self.service_template.output_method(self.api_url, self.flow)
+        # write(self.api_url + "\n")
 
