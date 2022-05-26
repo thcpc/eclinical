@@ -10,7 +10,7 @@ class PortalFindStudy(StandardStep):
     def __init__(self, service: Hierarchies, scenario: Scenario):
         self.service = service
         self.scenario = scenario
-        self.service.add_step(self.Name, self)
+        self.service.step_definitions[self.Name] = self
 
     def _pre_processor(self):
         PortalFindSponsor(self.service, self.scenario).run()
@@ -22,15 +22,17 @@ class PortalFindStudy(StandardStep):
         return self.scenario.get("study").get("name")
 
     def call_back(self, **kwargs):
-        for study in kwargs.get("study").studies():
+        self.service.context["study_id"] = None
+        for study in kwargs.get("query").studies():
             if study.name() == self.study():
                 self.service.context["study_id"] = study.id()
 
     def _execute(self):
         self.service.get_study(
-            name=self.study(),
             data=self.data(),
             path_variable=self.path_variable())
+
+    def _post_processor(self): print(self.service.context["study_id"])
 
     def data(self):
         return dict(sponsorId=self.service.context['sponsor_id'])

@@ -1,6 +1,4 @@
 class StandardStep:
-    @property
-    def name(self): raise Exception("name need override")
 
     def data(self): ...
 
@@ -14,7 +12,10 @@ class StandardStep:
 
     def _execute(self): ...
 
+    def ignore(self): return False
+
     def run(self):
         self._pre_processor()
-        self._execute()
+        if not self.ignore():
+            self._execute()
         self._post_processor()

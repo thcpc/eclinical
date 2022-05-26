@@ -5,12 +5,12 @@ from eclinical.standard.steps.portal.portal_life_cycle import PortalLifeCycle
 
 
 class PortalFindSponsor(StandardStep):
-    Name = "portal_life_cycle"
+    Name = "portal_find_sponsor"
 
     def __init__(self, service: Hierarchies, scenario: Scenario):
         self.service = service
         self.scenario = scenario
-        self.service.add_step(self.Name, self)
+        self.service.step_definitions[self.Name] = self
 
     def sponsor(self):
         return self.scenario.get("study").get("sponsor")
@@ -24,7 +24,7 @@ class PortalFindSponsor(StandardStep):
     def call_back(self, **kwargs):
         for sponsor in kwargs.get("query").sponsorExtDtoList():
             if sponsor.name() == self.sponsor():
-                self.service.context["sponsor_id"] = sponsor.id
+                self.service.context["sponsor_id"] = sponsor.id()
 
     def life_cycle(self):
         return self.scenario.get("study").get("lifeCycle")

@@ -9,7 +9,7 @@ class PortalLifeCycle(StandardStep):
     def __init__(self, service: Hierarchies, scenario: Scenario):
         self.service = service
         self.scenario = scenario
-        self.service.add_step(self.Name, self)
+        self.service.step_definitions[self.Name] = self
 
     def call_back(self, **kwargs):
         for env in kwargs.get("envs").payload():

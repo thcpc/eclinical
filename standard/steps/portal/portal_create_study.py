@@ -2,6 +2,7 @@ from eclinical.standard.base.scenario import Scenario
 from eclinical.standard.base.standard_step import StandardStep
 from eclinical.standard.portal.hierarchies import Hierarchies
 from eclinical.standard.steps.portal.portal_find_sponsor import PortalFindSponsor
+from eclinical.standard.steps.portal.portal_find_study import PortalFindStudy
 
 
 class PortalCreateStudy(StandardStep):
@@ -10,13 +11,14 @@ class PortalCreateStudy(StandardStep):
     def __init__(self, service: Hierarchies, scenario: Scenario):
         self.service = service
         self.scenario = scenario
-        self.service.add_step(self.Name, self)
-
-
-
+        self.service.step_definitions[self.Name] = self
 
     def _pre_processor(self):
         PortalFindSponsor(self.service, self.scenario).run()
+
+    def ignore(self):
+        PortalFindStudy(self.service, self.scenario).run()
+        return self.service.context["study_id"] is not None
 
     def _execute(self):
         self.service.new_study(data=self.data())
@@ -27,5 +29,5 @@ class PortalCreateStudy(StandardStep):
 
     def data(self):
         return dict(active=True, description="", name=self.study(),
-                    sponsorId=self.service.context[f"sponsor_{self.sponsor()}"],
+                    sponsorId=self.service.context[f"sponsor_id"],
                     subjectManagement=5)

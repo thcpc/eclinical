@@ -8,7 +8,6 @@ class Scenario:
         self.data = dict()
         self.__load()
         self.steps = []
-        self.sub_scenarios = []
 
     def __load(self):
         for root, dirs, files in os.walk(self.scenario_dir):
@@ -18,16 +17,12 @@ class Scenario:
                         self.data[os.path.splitext(filename)[0]] = json.loads(f.read())
 
     def append_sub_scenario(self, sub_scenario):
-        self.sub_scenarios.append(sub_scenario)
-
-    def run_scenario(self):
-        for sub_scenario in self.sub_scenarios:
-            sub_scenario.run_step()
+        self.steps.append(sub_scenario)
 
     def append_step(self, step_class, service):
         self.steps.append(step_class(service, self))
 
-    def run_step(self):
+    def run(self):
         for step in self.steps:
             step.run()
 
