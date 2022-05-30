@@ -29,7 +29,7 @@ class UserGroupInfo(MetaJson):
 
     @cjen.operate.common.value
     @cjen.operate.json.listOf(clazz=CompanyMultipleEnv)
-    @cjen.operate.json.many(json_path="$.payload.companyMultipleEnvs")
+    @cjen.operate.json.one(json_path="$.payload.companyMultipleEnvs")
     def company_multiple_envs(self) -> list[CompanyMultipleEnv]: ...
 
     @cjen.operate.common.value

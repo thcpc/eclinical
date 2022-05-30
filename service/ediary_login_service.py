@@ -15,6 +15,8 @@ class EDiaryLoginService(BigTangerine):
         self.base_url = self.__dict__.get("base_url", self.environment.uri)
         self.context["userName"] = self.context.get("userName") or self.environment.user
         self.context["password"] = self.context.get("password") or self.environment.password
+        self.edc_auth()
+        self.edc_auth()
 
     @cjen.http.post_mapping(uri="admin/auth/subject/login")
     @cjen.jwt(key="Authorization", json_path="$.payload.jwtAuthenticationResponse.token")

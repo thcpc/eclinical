@@ -1,6 +1,7 @@
 from eclinical.standard.base.standard_step import StandardStep
 from eclinical.standard.base.scenario import Scenario
 from eclinical.standard.portal.user_groups import UserGroups
+from eclinical.standard.steps.portal.portal_create_usergroup import PortalCreateUserGroup
 from eclinical.standard.steps.portal.portal_find_usergroup import PortalFindUserGroup
 
 
@@ -15,12 +16,15 @@ class PortalGetUserGroupInfo(StandardStep):
     def _pre_processor(self):
         PortalFindUserGroup(self.service, self.scenario).run()
 
+    def life_cycle(self): return self.scenario.get("user_groups").get("lifeCycle")
+
     def call_back(self, **kwargs):
         for company_multiple_env in kwargs.get("query").company_multiple_envs():
             if company_multiple_env.name() == self.life_cycle():
                 self.service.context["company_multiple_env_id"] = company_multiple_env.id()
 
-    def _post_processor(self): print(self.service.context["company_multiple_env_id"])
+    def _post_processor(self):
+        print("company_multiple_env_id", self.service.context["company_multiple_env_id"])
 
     def _execute(self): self.service.user_group_info(path_variable=self.path_variable())
 

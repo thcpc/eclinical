@@ -11,9 +11,10 @@ class PortalFindUserGroup(StandardStep):
         self.scenario = scenario
         self.service.step_definitions[self.Name] = self
 
-    def user_group(self): self.scenario.get("study").get("userGroup")
+    def user_group(self): return self.scenario.get("user_groups").get("userGroup")
 
-    def _post_processor(self): print(self.service.context["user_group_id"])
+    def _post_processor(self):
+        print('user_group_id', self.service.context["user_group_id"])
 
     def call_back(self, **kwargs):
         self.service.context["user_group_id"] = None
