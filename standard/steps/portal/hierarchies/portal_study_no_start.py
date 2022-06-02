@@ -1,7 +1,8 @@
-from eclinical.standard.base.standard_step import StandardStep
-from eclinical.standard.base.scenario import Scenario
+from cjen.sco.scenario import Scenario
+from cjen.sco.standard_step import StandardStep
+
 from eclinical.standard.portal.hierarchies import Hierarchies
-from eclinical.standard.steps.portal.portal_find_study import PortalFindStudy
+from eclinical.standard.steps.portal.hierarchies.portal_find_study import PortalFindStudy
 
 
 class PortalStudyNoStart(StandardStep):

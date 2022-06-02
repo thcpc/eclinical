@@ -1,10 +1,11 @@
 import os.path
 
+from cjen.sco.scenario import Scenario
+
 from eclinical import Environment
-from eclinical.standard.base.scenario import Scenario
 from eclinical.standard.portal.hierarchies import Hierarchies
-from eclinical.standard.steps.portal.portal_create_study import PortalCreateStudy
-from eclinical.standard.steps.portal.portal_startup_study import PortalStartupStudy
+from eclinical.standard.steps.portal.hierarchies.portal_create_study import PortalCreateStudy
+from eclinical.standard.steps.portal.hierarchies.portal_startup_study import PortalStartupStudy
 
 
 class ScoCreateStudy:

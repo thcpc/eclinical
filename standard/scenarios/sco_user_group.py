@@ -1,13 +1,11 @@
 import os.path
 
+from cjen.sco.scenario import Scenario
+
 from eclinical import Environment
-from eclinical.standard.base.scenario import Scenario
+
 from eclinical.standard.portal.user_groups import UserGroups
-from eclinical.standard.steps.portal.portal_add_group_user import PortalAddGroupUser
-from eclinical.standard.steps.portal.portal_create_usergroup import PortalCreateUserGroup
-from eclinical.standard.steps.portal.portal_find_usergroup import PortalFindUserGroup
-from eclinical.standard.steps.portal.portal_find_un_added_user import PortalFindUnAddedUser
-from eclinical.standard.steps.portal.portal_get_user_group_info import PortalGetUserGroupInfo
+from eclinical.standard.steps.portal.user_groups.portal_add_group_user import PortalAddGroupUser
 
 
 class ScoUserGroup:

@@ -1,8 +1,8 @@
-from eclinical.standard.base.standard_step import StandardStep
-from eclinical.standard.base.scenario import Scenario
+from cjen.sco.scenario import Scenario
+from cjen.sco.standard_step import StandardStep
+
 from eclinical.standard.portal.user_groups import UserGroups
-from eclinical.standard.steps.portal.portal_create_usergroup import PortalCreateUserGroup
-from eclinical.standard.steps.portal.portal_find_usergroup import PortalFindUserGroup
+from eclinical.standard.steps.portal.user_groups.portal_find_usergroup import PortalFindUserGroup
 
 
 class PortalGetUserGroupInfo(StandardStep):

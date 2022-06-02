@@ -1,5 +1,6 @@
-from eclinical.standard.base.standard_step import StandardStep
-from eclinical.standard.base.scenario import Scenario
+from cjen.sco.scenario import Scenario
+from cjen.sco.standard_step import StandardStep
+
 from eclinical.standard.portal.hierarchies import Hierarchies
 
 

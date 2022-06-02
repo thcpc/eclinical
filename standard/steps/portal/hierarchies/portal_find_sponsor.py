@@ -1,7 +1,8 @@
-from eclinical.standard.base.scenario import Scenario
-from eclinical.standard.base.standard_step import StandardStep
+from cjen.sco.scenario import Scenario
+from cjen.sco.standard_step import StandardStep
+
 from eclinical.standard.portal.hierarchies import Hierarchies
-from eclinical.standard.steps.portal.portal_life_cycle import PortalLifeCycle
+from eclinical.standard.steps.portal.user_groups.portal_life_cycle import PortalLifeCycle
 
 
 class PortalFindSponsor(StandardStep):
