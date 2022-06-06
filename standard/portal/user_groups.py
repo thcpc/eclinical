@@ -13,6 +13,8 @@ class UserGroups(PortalLoginService):
     def __init__(self, environment: Environment = None):
         super().__init__(environment)
 
+    @cjen.http.get_mapping(uri="admin/company/env/{life_cycle_id}/user-group/{userGroup_id}/hierarchies")
+    def api_get_lifecycle_hierarchies(self, path_variable, data, resp=None, **kwargs): ...
 
     @cjen.http.post_mapping(uri="admin/userGroup/query?pageNo={pageNo}&pageSize=25", json_clazz=QueryUserGroups)
     def get_user_group(self, path_variable, query: QueryUserGroups = None, resp=None, **kwargs):

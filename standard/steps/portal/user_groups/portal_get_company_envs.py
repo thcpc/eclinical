@@ -16,5 +16,7 @@ class PortalGetCompanyEnvs(StandardStep):
 
     def call_back(self, **kwargs):
         self.service.context["envIds"] = [company_env.id() for company_env in kwargs.get("company_envs").list()]
+        self.service.context["envObjects"] = [{f'{company_env.name()}': company_env.id()} for company_env in
+                                              kwargs.get("company_envs").list()]
 
     def _execute(self): self.service.api_company_envs()
