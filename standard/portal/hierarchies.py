@@ -1,4 +1,5 @@
 import cjen
+from cjen.sco.step_definitions import StepDefinitions
 
 from eclinical import Environment
 from eclinical.service.portal_login_service import PortalLoginService
@@ -13,7 +14,9 @@ from eclinical.standard.portal.dto.systems import Systems
 class Hierarchies(PortalLoginService):
     def __init__(self, environment: Environment = None):
         super().__init__(environment)
-        # self.step_definitions = StepDefinitions()
+        self.step_definitions = StepDefinitions()
+
+
 
     @cjen.http.get_mapping(uri="admin/company/envs", json_clazz=Envs)
     @cjen.operate.asserts.validation_meta(meta_name="envs")
@@ -37,22 +40,34 @@ class Hierarchies(PortalLoginService):
             if not query.nextPage() == 0:
                 self.get_study(path_variable=dict(pageNo=query.nextPage()), data=data)
 
-    def new_sponsor(self):
+    @cjen.http.post_mapping(uri="admin/sponsor", json_clazz=OkResponse)
+    @cjen.operate.asserts.validation_meta(meta_name="ok")
+    def new_sponsor(self, data, ok: OkResponse = None, resp=None, **kwargs):
         ...
 
     @cjen.http.post_mapping(uri="admin/study", json_clazz=OkResponse)
     @cjen.operate.asserts.validation_meta(meta_name="ok")
-    def new_study(self, data, ok: OkResponse, resp=None, **kwargs):
+    def new_study(self, data, ok: OkResponse = None, resp=None, **kwargs):
         ...
 
+    @cjen.http.get_mapping(uri="admin/sponsor/{sponsor_id}/env/{env_id}/systems", json_clazz=Systems)
+    def sponsor_systems(self, path_variable, systems: Systems = None, resp=None, **kwargs):
+        from eclinical.standard.steps.portal.hierarchies.portal_sponsor_no_start import PortalSponsorNoStart
+        self.step_definitions.call_back(PortalSponsorNoStart.Name, systems=systems)
+
     @cjen.http.get_mapping(uri="admin/study/{study_id}/env/{env_id}/systems", json_clazz=Systems)
-    def system_systems(self, path_variable, systems: Systems = None, resp=None, **kwargs):
+    def study_systems(self, path_variable, systems: Systems = None, resp=None, **kwargs):
         from eclinical.standard.steps.portal.hierarchies.portal_study_no_start import PortalStudyNoStart
         self.step_definitions.call_back(PortalStudyNoStart.Name, systems=systems)
 
     @cjen.http.post_mapping(uri="admin/study/{study_id}/env/{env_id}/database", json_clazz=OkResponse)
     @cjen.operate.asserts.validation_meta(meta_name="ok")
-    def study_startup(self, path_variable, data, ok: OkResponse, resp=None, **kwargs):
+    def study_startup(self, path_variable, data, ok: OkResponse = None, resp=None, **kwargs):
+        ...
+
+    @cjen.http.post_mapping(uri="admin/sponsor/{sponsor_id}/env/{env_id}/database", json_clazz=OkResponse)
+    @cjen.operate.asserts.validation_meta(meta_name="ok")
+    def sponsor_startup(self, path_variable, data, ok: OkResponse = None, resp=None, **kwargs):
         ...
 
 # if __name__ == '__main__':

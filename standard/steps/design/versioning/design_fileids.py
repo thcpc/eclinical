@@ -22,4 +22,5 @@ class DesignFileIDS(StandardStep):
     def call_back(self, **kwargs):
         self.service.context["archives"] = kwargs.get("archives")
 
-    def path_variable(self): return dict(currentVersionId=self.service.context["currentVersionId"])
+    def path_variable(self):
+        return dict(currentVersionId=self.service.context["currentVersionId"])

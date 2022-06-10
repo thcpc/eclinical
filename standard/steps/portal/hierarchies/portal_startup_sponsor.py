@@ -1,14 +1,14 @@
-
+from cjen.sco.scenario import Scenario
 from cjen.sco.standard_step import StandardStep
 
 from eclinical.standard.portal.hierarchies import Hierarchies
 from eclinical.standard.scenarios.portal_scenario import PortalScenario
 from eclinical.standard.steps.portal.hierarchies.portal_find_sponsor import PortalFindSponsor
+from eclinical.standard.steps.portal.hierarchies.portal_sponsor_no_start import PortalSponsorNoStart
 
 
-class PortalFindStudy(StandardStep):
-    Name = "portal_find_study"
-    Id = "study_id"
+class PortalStartSponsor(StandardStep):
+    Name = "portal_startup_sponsor.py"
 
     def __init__(self, service: Hierarchies, scenario: PortalScenario):
         self.service = service
@@ -17,26 +17,20 @@ class PortalFindStudy(StandardStep):
 
     def _pre_processor(self):
         PortalFindSponsor(self.service, self.scenario).run()
+        PortalSponsorNoStart(self.service, self.scenario).run()
 
-    def sponsor(self):
-        return self.scenario.sponsor()
-
-    def study(self):
-        return self.scenario.study()
-
-    def call_back(self, **kwargs):
-        self.service.context[self.Id] = None
-        for study in kwargs.get("query").studies():
-            if study.name() == self.study():
-                self.service.context[self.Id] = study.id()
+    def ignore(self):
+        return not self.service.context[PortalSponsorNoStart.System]
 
     def _execute(self):
-        self.service.get_study(
+        self.service.sponsor_startup(
             data=self.data(),
             path_variable=self.path_variable())
 
-    def data(self):
-        return dict(sponsorId=self.service.context[PortalFindSponsor.Id])
+    def life_cycle(self): return self.scenario.life_cycle()
+
+    def data(self): return self.service.context[PortalSponsorNoStart.System]
 
     def path_variable(self):
-        return dict(pageNo=1)
+        return dict(sponsor_id=self.service.context[PortalFindSponsor.Id],
+                    env_id=self.service.context[self.life_cycle()])

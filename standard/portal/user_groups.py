@@ -5,16 +5,30 @@ from eclinical.standard.base.ok_response import OkResponse
 
 from eclinical.standard.portal.dto.company_envs import CompanyEnvs
 from eclinical.standard.portal.dto.group_user import GroupUsers
+from eclinical.standard.portal.dto.hierarchy import Hierarchy
 from eclinical.standard.portal.dto.query_user_groups import QueryUserGroups
 from eclinical.standard.portal.dto.user_group_info import UserGroupInfo
 
 
 class UserGroups(PortalLoginService):
+    LifeCycleId = "life_cycle_id"
+    UserGroupId = "userGroup_id"
+    PageNo = "pageNo"
+
     def __init__(self, environment: Environment = None):
         super().__init__(environment)
 
-    @cjen.http.get_mapping(uri="admin/company/env/{life_cycle_id}/user-group/{userGroup_id}/hierarchies")
-    def api_get_lifecycle_hierarchies(self, path_variable, data, resp=None, **kwargs): ...
+    @cjen.http.put_mapping(uri="admin/company/env/{life_cycle_id}/user-group/{userGroup_id}/hierarchies",json_clazz=OkResponse)
+    @cjen.operate.asserts.validation_meta(meta_name="ok", fields="procCode")
+    def api_set_lifecycle_hierarchies(self, path_variable, data, ok: OkResponse = None, resp=None, **kwargs):
+        ...
+
+    @cjen.http.get_mapping(uri="admin/company/env/{life_cycle_id}/user-group/{userGroup_id}/hierarchies",
+                           json_clazz=Hierarchy)
+    def api_get_lifecycle_hierarchies(self, path_variable, hierarchies: Hierarchy, resp=None, **kwargs):
+        from eclinical.standard.steps.portal.user_groups.portal_get_lifecycle_hierarchies import \
+            PortalGetLifeCycleHierarchies
+        self.step_definitions.call_back(PortalGetLifeCycleHierarchies.Name, hierarchies=hierarchies)
 
     @cjen.http.post_mapping(uri="admin/userGroup/query?pageNo={pageNo}&pageSize=25", json_clazz=QueryUserGroups)
     def get_user_group(self, path_variable, query: QueryUserGroups = None, resp=None, **kwargs):
