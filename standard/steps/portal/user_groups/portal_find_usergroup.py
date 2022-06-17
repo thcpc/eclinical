@@ -9,15 +9,13 @@ class PortalFindUserGroup(StandardStep):
     Name = "portal_find_user_group"
     Id = "user_group_id"
 
-    def __init__(self, service: UserGroups, scenario:PortalScenario):
+    def __init__(self, service: UserGroups, scenario: PortalScenario):
         self.service = service
         self.scenario = scenario
         self.service.step_definitions[self.Name] = self
 
-    def user_group(self): return self.scenario.user_group()
-
-    # def _post_processor(self):
-    #     print('user_group_id', self.service.context[self.Id])
+    def user_group(self):
+        return self.scenario.user_group()
 
     def call_back(self, **kwargs):
         self.service.context[self.Id] = None
@@ -25,4 +23,5 @@ class PortalFindUserGroup(StandardStep):
             if user_group.code() == self.user_group():
                 self.service.context[self.Id] = user_group.id()
 
-    def _execute(self): self.service.get_user_group(path_variable=dict(pageNo=1))
+    def _execute(self):
+        self.service.get_user_group(path_variable=dict(pageNo=1))
