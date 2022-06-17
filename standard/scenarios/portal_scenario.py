@@ -22,3 +22,6 @@ class PortalScenario(Scenario):
 
     def user(self):
         return self.get("user").get("name")
+
+    def role(self):
+        return self.get("user_role").get("name")

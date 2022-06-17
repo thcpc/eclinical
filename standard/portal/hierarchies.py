@@ -16,8 +16,6 @@ class Hierarchies(PortalLoginService):
         super().__init__(environment)
         self.step_definitions = StepDefinitions()
 
-
-
     @cjen.http.get_mapping(uri="admin/company/envs", json_clazz=Envs)
     @cjen.operate.asserts.validation_meta(meta_name="envs")
     def get_env_list(self, envs: Envs = None, resp=None, **kwargs):

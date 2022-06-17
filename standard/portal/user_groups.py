@@ -34,7 +34,7 @@ class UserGroups(PortalLoginService):
     def get_user_group(self, path_variable, query: QueryUserGroups = None, resp=None, **kwargs):
         from eclinical.standard.steps.portal.user_groups.portal_find_usergroup import PortalFindUserGroup
         self.step_definitions.call_back(PortalFindUserGroup.Name, query=query)
-        if not self.context["user_group_id"]:
+        if not self.context[PortalFindUserGroup.Id]:
             if not query.nextPage() == 0:
                 self.get_user_group(path_variable=dict(pageNo=query.nextPage()))
 
