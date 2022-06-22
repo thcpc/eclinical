@@ -18,54 +18,54 @@ class Hierarchies(PortalLoginService):
 
     @cjen.http.get_mapping(uri="admin/company/envs", json_clazz=Envs)
     @cjen.operate.asserts.validation_meta(meta_name="envs")
-    def get_env_list(self, envs: Envs = None, resp=None, **kwargs):
+    def hierarchies_get_env_list(self, envs: Envs = None, resp=None, **kwargs):
         from eclinical.standard.steps.portal.user_groups.portal_life_cycle import PortalLifeCycle
         self.step_definitions.call_back(PortalLifeCycle.Name, envs=envs)
 
     @cjen.http.get_mapping(uri="admin/company/env/{env_id}/hierarchies", json_clazz=QuerySponsors)
     @cjen.operate.asserts.validation_meta(meta_name="query")
-    def get_sponsor(self, path_variable, query: QuerySponsors = None, resp=None, **kwargs):
+    def hierarchies_get_sponsor(self, path_variable, query: QuerySponsors = None, resp=None, **kwargs):
         from eclinical.standard.steps.portal.hierarchies.portal_find_sponsor import PortalFindSponsor
         self.step_definitions.call_back(PortalFindSponsor.Name, query=query)
 
     @cjen.http.post_mapping(uri="admin/study/query?pageNo={pageNo}&pageSize=25", json_clazz=QueryStudies)
-    def get_study(self, path_variable, data, query: QueryStudies = None, resp=None, **kwargs):
+    def hierarchies_get_study(self, path_variable, data, query: QueryStudies = None, resp=None, **kwargs):
         from eclinical.standard.steps.portal.hierarchies.portal_find_study import PortalFindStudy
         self.context["study_id"] = None
         self.step_definitions.call_back(PortalFindStudy.Name, query=query)
 
         if not self.context["study_id"]:
             if not query.nextPage() == 0:
-                self.get_study(path_variable=dict(pageNo=query.nextPage()), data=data)
+                self.hierarchies_get_study(path_variable=dict(pageNo=query.nextPage()), data=data)
 
     @cjen.http.post_mapping(uri="admin/sponsor", json_clazz=OkResponse)
     @cjen.operate.asserts.validation_meta(meta_name="ok")
-    def new_sponsor(self, data, ok: OkResponse = None, resp=None, **kwargs):
+    def hierarchies_new_sponsor(self, data, ok: OkResponse = None, resp=None, **kwargs):
         ...
 
     @cjen.http.post_mapping(uri="admin/study", json_clazz=OkResponse)
     @cjen.operate.asserts.validation_meta(meta_name="ok")
-    def new_study(self, data, ok: OkResponse = None, resp=None, **kwargs):
+    def hierarchies_new_study(self, data, ok: OkResponse = None, resp=None, **kwargs):
         ...
 
     @cjen.http.get_mapping(uri="admin/sponsor/{sponsor_id}/env/{env_id}/systems", json_clazz=Systems)
-    def sponsor_systems(self, path_variable, systems: Systems = None, resp=None, **kwargs):
+    def hierarchies_sponsor_systems(self, path_variable, systems: Systems = None, resp=None, **kwargs):
         from eclinical.standard.steps.portal.hierarchies.portal_sponsor_no_start import PortalSponsorNoStart
         self.step_definitions.call_back(PortalSponsorNoStart.Name, systems=systems)
 
     @cjen.http.get_mapping(uri="admin/study/{study_id}/env/{env_id}/systems", json_clazz=Systems)
-    def study_systems(self, path_variable, systems: Systems = None, resp=None, **kwargs):
+    def hierarchies_study_systems(self, path_variable, systems: Systems = None, resp=None, **kwargs):
         from eclinical.standard.steps.portal.hierarchies.portal_study_no_start import PortalStudyNoStart
         self.step_definitions.call_back(PortalStudyNoStart.Name, systems=systems)
 
     @cjen.http.post_mapping(uri="admin/study/{study_id}/env/{env_id}/database", json_clazz=OkResponse)
     @cjen.operate.asserts.validation_meta(meta_name="ok")
-    def study_startup(self, path_variable, data, ok: OkResponse = None, resp=None, **kwargs):
+    def hierarchies_study_startup(self, path_variable, data, ok: OkResponse = None, resp=None, **kwargs):
         ...
 
     @cjen.http.post_mapping(uri="admin/sponsor/{sponsor_id}/env/{env_id}/database", json_clazz=OkResponse)
     @cjen.operate.asserts.validation_meta(meta_name="ok")
-    def sponsor_startup(self, path_variable, data, ok: OkResponse = None, resp=None, **kwargs):
+    def hierarchies_sponsor_startup(self, path_variable, data, ok: OkResponse = None, resp=None, **kwargs):
         ...
 
 # if __name__ == '__main__':

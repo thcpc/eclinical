@@ -1,6 +1,7 @@
 import os.path
 from eclinical import Environment
-from eclinical.standard.portal.user import User
+from eclinical.standard.portal.portal_api import PortalApi
+
 from eclinical.standard.scenarios.portal_scenario import PortalScenario
 from eclinical.standard.steps.portal.user.portal_associated_usergroup import PortalAssociatedUserGroup
 from eclinical.standard.steps.portal.user.portal_create_user import PortalCreateUser
@@ -14,7 +15,7 @@ from eclinical.standard.steps.portal.user.portal_user_append_usergroup import Po
 class ScoCreateUser:
     def __init__(self, scenario_dir, environment: Environment):
         self.scenario = PortalScenario(scenario_dir)
-        service = User(environment)
+        service = PortalApi(environment)
         self.scenario.append_step(PortalFindUser, service)
         self.scenario.append_step(PortalCreateUser, service)
         self.scenario.append_step(PortalFindUserRole, service)
@@ -28,6 +29,6 @@ class ScoCreateUser:
 
 if __name__ == '__main__':
     sco_dir = os.path.join("new_study")
-    envir = Environment.loader("AWS_Test")
+    envir = Environment.loader("DEV_01")
     sco = ScoCreateUser(sco_dir, envir)
     sco.run()

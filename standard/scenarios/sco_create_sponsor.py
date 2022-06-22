@@ -1,6 +1,7 @@
 import os.path
 from eclinical import Environment
-from eclinical.standard.portal.hierarchies import Hierarchies
+
+from eclinical.standard.portal.portal_api import PortalApi
 from eclinical.standard.scenarios.portal_scenario import PortalScenario
 from eclinical.standard.steps.portal.hierarchies.portal_create_sponsor import PortalCreateSponsor
 from eclinical.standard.steps.portal.hierarchies.portal_startup_sponsor import PortalStartSponsor
@@ -9,7 +10,8 @@ from eclinical.standard.steps.portal.hierarchies.portal_startup_sponsor import P
 class ScoCreateSponsor:
     def __init__(self, scenario_dir, environment: Environment):
         self.scenario = PortalScenario(scenario_dir)
-        service = Hierarchies(environment)
+        # service = Hierarchies(environment)
+        service = PortalApi(environment)
         self.scenario.append_step(PortalCreateSponsor, service)
         self.scenario.append_step(PortalStartSponsor, service)
 
@@ -18,6 +20,6 @@ class ScoCreateSponsor:
 
 if __name__ == '__main__':
     sco_dir = os.path.join("new_study")
-    envir = Environment.loader("AWS_Test")
+    envir = Environment.loader("DEV_01")
     sco = ScoCreateSponsor(sco_dir, envir)
     sco.run()

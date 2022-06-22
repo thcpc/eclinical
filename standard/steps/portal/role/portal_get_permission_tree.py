@@ -21,7 +21,7 @@ class PortalGetPermissionTree(StandardStep):
         return dict(role_id=self.service.context[PortalFindRole.Id])
 
     def _execute(self):
-        self.service.api_all_permission_tree(path_variable=self.path_variable())
+        self.service.role_api_all_permission_tree(path_variable=self.path_variable())
 
     def call_back(self, **kwargs):
         ids = set()

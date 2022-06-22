@@ -32,4 +32,4 @@ class PortalCreateUser(StandardStep):
             "phoneNumber": "88888888",
             "email": f'{self.login_name()}@163.com', "active": True, "etmfAdministrator": False}
 
-    def _execute(self): self.service.api_create_user(data=self.data())
+    def _execute(self): self.service.user_api_create_user(data=self.data())

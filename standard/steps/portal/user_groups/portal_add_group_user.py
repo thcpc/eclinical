@@ -20,7 +20,7 @@ class PortalAddGroupUser(StandardStep):
     def ignore(self): return self.service.context["user_id"] is None
 
     def _execute(self):
-        self.service.api_add_group_user(path_variable=self.path_variable(), data=self.data())
+        self.service.usergroups_api_add_group_user(path_variable=self.path_variable(), data=self.data())
 
     def path_variable(self): return dict(userGroup_id=self.service.context["user_group_id"])
 

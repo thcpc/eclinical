@@ -1,7 +1,7 @@
 import os
 
 from eclinical import Environment
-from eclinical.standard.portal.role import Role
+from eclinical.standard.portal.portal_api import PortalApi
 from eclinical.standard.scenarios.portal_scenario import PortalScenario
 from eclinical.standard.steps.portal.role.portal_create_role import PortalCreateRole
 from eclinical.standard.steps.portal.role.portal_find_role import PortalFindRole
@@ -12,10 +12,14 @@ from eclinical.standard.steps.portal.role.portal_set_permissions import PortalSe
 class ScoCreateRole:
     def __init__(self, scenario_dir, environment: Environment):
         self.scenario = PortalScenario(scenario_dir)
-        service = Role(environment)
+        service = PortalApi(environment)
+        # 查询角色
         self.scenario.append_step(PortalFindRole, service)
+        # 查询创建角色
         self.scenario.append_step(PortalCreateRole, service)
+        # 获取菜单树
         self.scenario.append_step(PortalGetPermissionTree, service)
+        # 为角色设置所有的菜单权限
         self.scenario.append_step(PortalSetPermissions, service)
 
     def run(self): self.scenario.run()
@@ -23,6 +27,6 @@ class ScoCreateRole:
 
 if __name__ == '__main__':
     sco_dir = os.path.join("new_study")
-    envir = Environment.loader("AWS_Test")
+    envir = Environment.loader("DEV_01")
     sco = ScoCreateRole(sco_dir, envir)
     sco.run()

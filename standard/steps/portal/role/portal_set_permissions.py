@@ -26,4 +26,4 @@ class PortalSetPermissions(StandardStep):
         return dict(role_id=self.service.context[PortalFindRole.Id])
 
     def _execute(self):
-        self.service.api_set_permissions(path_variable=self.path_variable(), data=self.data())
+        self.service.role_api_set_permissions(path_variable=self.path_variable(), data=self.data())

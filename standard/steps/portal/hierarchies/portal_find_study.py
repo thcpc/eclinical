@@ -31,7 +31,7 @@ class PortalFindStudy(StandardStep):
                 self.service.context[self.Id] = study.id()
 
     def _execute(self):
-        self.service.get_study(
+        self.service.hierarchies_get_study(
             data=self.data(),
             path_variable=self.path_variable())
 

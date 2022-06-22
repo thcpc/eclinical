@@ -24,4 +24,4 @@ class PortalFindUserGroup(StandardStep):
                 self.service.context[self.Id] = user_group.id()
 
     def _execute(self):
-        self.service.get_user_group(path_variable=dict(pageNo=1))
+        self.service.usergroups_get_user_group(path_variable=dict(pageNo=1))

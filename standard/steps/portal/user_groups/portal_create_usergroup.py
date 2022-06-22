@@ -25,6 +25,7 @@ class PortalCreateUserGroup(StandardStep):
 
     def _execute(self):
         if self.service.context[PortalFindUserGroup.Id] is None:
-            self.service.create_user_group(data=self.data())
+            self.service.usergroups_create_user_group(data=self.data())
 
-    def data(self): return {"code": self.code(), "active": True, "envIds": self.service.context["envIds"]}
+    def data(self):
+        return {"code": self.code(), "active": True, "envIds": self.service.context[PortalGetCompanyEnvs.Id]}

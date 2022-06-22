@@ -47,4 +47,4 @@ class PortalUserAppendUserGroup(StandardStep):
         return rels
 
     def _execute(self):
-        self.service.api_append_user_group_role_rel(path_variable=self.path_variable(), data=self.data())
+        self.service.user_api_append_user_group_role_rel(path_variable=self.path_variable(), data=self.data())

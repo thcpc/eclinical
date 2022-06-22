@@ -23,7 +23,7 @@ class PortalStartupStudy(StandardStep):
         return not self.service.context[PortalStudyNoStart.System]
 
     def _execute(self):
-        self.service.study_startup(
+        self.service.hierarchies_study_startup(
             data=self.data(),
             path_variable=self.path_variable())
 

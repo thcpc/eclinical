@@ -27,6 +27,6 @@ class PortalGetUserGroupInfo(StandardStep):
     def _post_processor(self):
         print("company_multiple_env_id", self.service.context["company_multiple_env_id"])
 
-    def _execute(self): self.service.user_group_info(path_variable=self.path_variable())
+    def _execute(self): self.service.usergroups_user_group_info(path_variable=self.path_variable())
 
     def path_variable(self): return dict(userGroup_id=self.service.context["user_group_id"])

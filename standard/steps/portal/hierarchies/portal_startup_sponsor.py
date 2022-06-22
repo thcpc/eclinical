@@ -23,7 +23,7 @@ class PortalStartSponsor(StandardStep):
         return not self.service.context[PortalSponsorNoStart.System]
 
     def _execute(self):
-        self.service.sponsor_startup(
+        self.service.hierarchies_sponsor_startup(
             data=self.data(),
             path_variable=self.path_variable())
 

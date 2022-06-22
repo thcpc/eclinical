@@ -26,4 +26,4 @@ class PortalFindRole(StandardStep):
                 self.service.context[self.Id] = role.id()
 
     def _execute(self):
-        self.service.api_query(path_variable=self.path_variable())
+        self.service.role_api_query(path_variable=self.path_variable())

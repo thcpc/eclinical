@@ -27,4 +27,4 @@ class PortalCreateRole(StandardStep):
     def data(self):
         return dict(category=self.category(), code=self.code(), subCode=self.subCode(), description="Test", active=True)
 
-    def _execute(self): self.service.api_create_role(data=self.data())
+    def _execute(self): self.service.role_api_create_role(data=self.data())

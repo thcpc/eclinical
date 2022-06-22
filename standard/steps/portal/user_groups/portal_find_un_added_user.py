@@ -28,6 +28,6 @@ class PortalFindUnAddedUser(StandardStep):
 
     def user_name(self): return self.scenario.user()
 
-    def _execute(self): self.service.api_get_un_added_user(path_variable=self.path_variable())
+    def _execute(self): self.service.usergroups_api_get_un_added_user(path_variable=self.path_variable())
 
     def path_variable(self): return dict(userGroup_id=self.service.context["user_group_id"])

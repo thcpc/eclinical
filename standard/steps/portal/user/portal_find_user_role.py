@@ -18,7 +18,7 @@ class PortalFindUserRole(StandardStep):
         return self.scenario.role()
 
     def _execute(self):
-        self.service.api_role_list()
+        self.service.user_api_role_list()
 
     def call_back(self, **kwargs):
         for r in kwargs.get("role_list").payload():

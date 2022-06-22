@@ -21,8 +21,11 @@ class PortalFindSponsor(StandardStep):
     def _pre_processor(self):
         PortalLifeCycle(self.service, self.scenario).run()
 
+    def _post_processor(self):
+        print(self.service.context[self.Id])
+
     def _execute(self):
-        self.service.get_sponsor(name=self.sponsor(), path_variable=self.path_variable())
+        self.service.hierarchies_get_sponsor(name=self.sponsor(), path_variable=self.path_variable())
 
     def call_back(self, **kwargs):
         self.service.context[self.Id] = None

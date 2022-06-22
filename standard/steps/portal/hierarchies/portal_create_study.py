@@ -23,7 +23,7 @@ class PortalCreateStudy(StandardStep):
         return self.service.context[PortalFindStudy.Id] is not None
 
     def _execute(self):
-        self.service.new_study(data=self.data())
+        self.service.hierarchies_new_study(data=self.data())
 
     def study(self): return self.scenario.study()
 

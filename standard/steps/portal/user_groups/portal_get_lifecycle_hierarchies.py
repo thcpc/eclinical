@@ -40,4 +40,4 @@ class PortalGetLifeCycleHierarchies(StandardStep):
                                                         self.service.context[PortalFindUserGroup.Id])
 
     def _execute(self):
-        self.service.api_get_lifecycle_hierarchies(path_variable=self.path_variable())
+        self.service.usergroups_api_get_lifecycle_hierarchies(path_variable=self.path_variable())

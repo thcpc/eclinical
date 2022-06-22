@@ -19,7 +19,7 @@ class PortalUserAccess(StandardStep):
 
     def path_variable(self): return {"user_id": self.service.context[PortalFindUser.Id]}
 
-    def _execute(self): self.service.api_user_access(path_variable=self.path_variable())
+    def _execute(self): self.service.user_api_user_access(path_variable=self.path_variable())
 
     def call_back(self, **kwargs):
         id_of_studies = set()

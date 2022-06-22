@@ -23,4 +23,4 @@ class PortalFindUser(StandardStep):
                 self.service.context[self.Id] = user.id()
 
     def _execute(self):
-        self.service.api_user_query(path_variable=dict(pageNo=1))
+        self.service.user_api_user_query(path_variable=dict(pageNo=1))

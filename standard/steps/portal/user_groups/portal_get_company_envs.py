@@ -22,4 +22,4 @@ class PortalGetCompanyEnvs(StandardStep):
         self.service.context[self.Object] = [{f'{company_env.name()}': company_env.id()} for company_env in
                                               kwargs.get("company_envs").list()]
 
-    def _execute(self): self.service.api_company_envs()
+    def _execute(self): self.service.usergroups_api_company_envs()

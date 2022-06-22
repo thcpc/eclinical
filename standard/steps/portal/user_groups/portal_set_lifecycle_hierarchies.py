@@ -53,4 +53,4 @@ class PortalSetLifeCycleHierarchies(StandardStep):
         return [sponsor.to_dict() for sponsor in self.service.context["hierarchies"]]
 
     def _execute(self):
-        self.service.api_set_lifecycle_hierarchies(data=self.data(), path_variable=self.path_variable())
+        self.service.usergroups_api_set_lifecycle_hierarchies(data=self.data(), path_variable=self.path_variable())

@@ -21,7 +21,7 @@ class PortalStudyNoStart(StandardStep):
             PortalFindStudy(self.service, self.scenario).run()
 
     def _execute(self):
-        self.service.study_systems(path_variable=self.path_variable())
+        self.service.hierarchies_study_systems(path_variable=self.path_variable())
 
     def life_cycle(self):
         return self.scenario.life_cycle()

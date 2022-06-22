@@ -22,4 +22,4 @@ class PortalLifeCycle(StandardStep):
         return self.scenario.life_cycle()
 
     def _execute(self):
-        self.service.get_env_list(life_cycle=self.life_cycle())
+        self.service.hierarchies_get_env_list(life_cycle=self.life_cycle())

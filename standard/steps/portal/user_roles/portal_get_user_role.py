@@ -21,7 +21,7 @@ class PortalGetUserRole(StandardStep):
 
     def role(self): return self.scenario.role()
 
-    def _execute(self): self.service.api_get_user_roles(path_variable=self.path_variable())
+    def _execute(self): self.service.userrole_api_get_user_roles(path_variable=self.path_variable())
 
     def call_back(self, **kwargs):
         self.service.context[self.Id] = None

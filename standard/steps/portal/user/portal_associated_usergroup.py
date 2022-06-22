@@ -21,7 +21,7 @@ class PortalAssociatedUserGroup(StandardStep):
         return dict(user_id=self.service.context[PortalFindUser.Id])
 
     def _execute(self):
-        self.service.api_user_group_role_rel(path_variable=self.path_variable())
+        self.service.user_api_user_group_role_rel(path_variable=self.path_variable())
 
     def call_back(self, **kwargs):
         rels = [dict(roleId=rel.roleId(), userGroupId=rel.userGroupId(), userId=rel.userId()) for rel in kwargs.get("rel").list()]
