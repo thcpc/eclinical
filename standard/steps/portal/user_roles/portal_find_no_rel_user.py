@@ -1,7 +1,7 @@
 from cjen.sco.scenario import Scenario
 from cjen.sco.standard_step import StandardStep
 
-from eclinical.standard.portal.user_role import UserRole
+
 from eclinical.standard.scenarios.portal_scenario import PortalScenario
 from eclinical.standard.steps.portal.user_roles.portal_get_user_role import PortalGetUserRole
 
@@ -10,7 +10,7 @@ class PortalFindNoRelUser(StandardStep):
     Name = "portal_find_no_rel_user.py"
     Id = "No_REL_USER"
 
-    def __init__(self, service: UserRole, scenario: PortalScenario):
+    def __init__(self, service, scenario: PortalScenario):
         self.service = service
         self.scenario = scenario
         self.service.step_definitions[self.Name] = self

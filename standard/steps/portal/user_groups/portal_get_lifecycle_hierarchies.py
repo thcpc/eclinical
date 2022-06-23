@@ -3,7 +3,7 @@ from cjen.sco.standard_step import StandardStep
 
 from eclinical.standard.portal.dto.hierarchies.node import Node
 from eclinical.standard.portal.dto.hierarchies.sponsor import Sponsor
-from eclinical.standard.portal.user_groups import UserGroups
+
 from eclinical.standard.scenarios.portal_scenario import PortalScenario
 from eclinical.standard.steps.portal.hierarchies.portal_find_sponsor import PortalFindSponsor
 from eclinical.standard.steps.portal.user_groups.portal_find_usergroup import PortalFindUserGroup
@@ -14,7 +14,7 @@ class PortalGetLifeCycleHierarchies(StandardStep):
     Name = "portal_get_lifecycle_hierarchies.py"
     Tree = "hierarchies"
 
-    def __init__(self, service: UserGroups, scenario: PortalScenario):
+    def __init__(self, service, scenario: PortalScenario):
         self.service = service
         self.scenario = scenario
         self.service.step_definitions[self.Name] = self

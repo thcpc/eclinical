@@ -1,7 +1,6 @@
 from cjen.exceptions import JsonPathNotFoundErr
 from cjen.sco.standard_step import StandardStep
 
-from eclinical.standard.portal.hierarchies import Hierarchies
 from eclinical.standard.scenarios.portal_scenario import PortalScenario
 from eclinical.standard.steps.portal.hierarchies.portal_find_sponsor import PortalFindSponsor
 
@@ -10,7 +9,7 @@ class PortalSponsorNoStart(StandardStep):
     Name = "portal_sponsor_no_start.py"
     System = "not_startup_sponsor"
 
-    def __init__(self, service: Hierarchies, scenario: PortalScenario):
+    def __init__(self, service, scenario: PortalScenario):
         self.service = service
         self.scenario = scenario
         self.service.step_definitions[self.Name] = self

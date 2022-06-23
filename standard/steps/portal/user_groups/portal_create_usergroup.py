@@ -1,7 +1,6 @@
 from cjen.sco.scenario import Scenario
 from cjen.sco.standard_step import StandardStep
 
-from eclinical.standard.portal.user_groups import UserGroups
 from eclinical.standard.scenarios.portal_scenario import PortalScenario
 from eclinical.standard.steps.portal.user_groups.portal_find_usergroup import PortalFindUserGroup
 from eclinical.standard.steps.portal.user_groups.portal_get_company_envs import PortalGetCompanyEnvs
@@ -10,7 +9,7 @@ from eclinical.standard.steps.portal.user_groups.portal_get_company_envs import 
 class PortalCreateUserGroup(StandardStep):
     Name = "portal_create_user_group"
 
-    def __init__(self, service: UserGroups, scenario: PortalScenario):
+    def __init__(self, service, scenario: PortalScenario):
         self.service = service
         self.scenario = scenario
         self.service.step_definitions[self.Name] = self

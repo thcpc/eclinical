@@ -1,7 +1,7 @@
 
 from cjen.sco.standard_step import StandardStep
 
-from eclinical.standard.portal.role import Role
+
 from eclinical.standard.scenarios.portal_scenario import PortalScenario
 
 
@@ -9,7 +9,7 @@ class PortalFindRole(StandardStep):
     Name = "portal_find_role.py"
     Id = "role_id"
 
-    def __init__(self, service: Role, scenario: PortalScenario):
+    def __init__(self, service, scenario: PortalScenario):
         self.service = service
         self.scenario = scenario
         self.service.step_definitions[self.Name] = self

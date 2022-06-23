@@ -1,7 +1,7 @@
 
 from cjen.sco.standard_step import StandardStep
 
-from eclinical.standard.portal.hierarchies import Hierarchies
+
 from eclinical.standard.scenarios.portal_scenario import PortalScenario
 from eclinical.standard.steps.portal.hierarchies.portal_find_sponsor import PortalFindSponsor
 
@@ -10,7 +10,7 @@ class PortalFindStudy(StandardStep):
     Name = "portal_find_study"
     Id = "study_id"
 
-    def __init__(self, service: Hierarchies, scenario: PortalScenario):
+    def __init__(self, service, scenario: PortalScenario):
         self.service = service
         self.scenario = scenario
         self.service.step_definitions[self.Name] = self
@@ -34,6 +34,7 @@ class PortalFindStudy(StandardStep):
         self.service.hierarchies_get_study(
             data=self.data(),
             path_variable=self.path_variable())
+        print(self.service.hierarchies_get_study.__name__)
 
     def data(self):
         return dict(sponsorId=self.service.context[PortalFindSponsor.Id])

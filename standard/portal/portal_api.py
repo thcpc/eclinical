@@ -183,13 +183,11 @@ class PortalApi(PortalLoginService):
     @cjen.step.call(stepName=PortalGetUserGroupInfo.Name, argName="query")
     def usergroups_user_group_info(self, path_variable, query: UserGroupInfo = None, resp=None, **kwargs):
         ...
-        # from eclinical.standard.steps.portal.user_groups.portal_get_user_group_info import PortalGetUserGroupInfo
-        # self.step_definitions.call_back(PortalGetUserGroupInfo.Name, query=query)
 
     @cjen.http.post_mapping(uri="admin/userGroup", json_clazz=OkResponse)
     @cjen.operate.asserts.validation_meta(meta_name="ok", fields="procCode")
     def usergroups_create_user_group(self, data, ok: OkResponse = None, resp=None, **kwargs):
-       ...
+        ...
 
     @cjen.http.post_mapping(uri="admin/user")
     def usergroups_create_user(self, data, resp=None, **kwargs):
@@ -198,7 +196,7 @@ class PortalApi(PortalLoginService):
     @cjen.http.get_mapping(uri="admin/company/envs", json_clazz=CompanyEnvs)
     @cjen.step.call(stepName=PortalGetCompanyEnvs.Name, argName="company_envs")
     def usergroups_api_company_envs(self, company_envs: CompanyEnvs = None, resp=None, **kwargs):
-       ...
+        ...
 
     @cjen.http.post_mapping(uri="admin/userGroup/{userGroup_id}/unAddedUsers?pageNo=1&pageSize=25",
                             json_clazz=GroupUsers)
@@ -217,12 +215,10 @@ class PortalApi(PortalLoginService):
     def userrole_api_user_group_user(self, path_variable, data, resp=None, **kwargs):
         ...
 
-    # {"roleId": 191}
     @cjen.http.post_mapping(uri="admin/role/{role_id}/relation/user_group_users?pageNo={pageNo}&pageSize=25")
     def userrole_get_relations_users(self, path_variable, data, resp=None, **kwargs):
         ...
 
-    # {"roleId":191
     @cjen.http.post_mapping(uri="admin/role/{role_id}/no_relation/user_group_users?pageNo={pageNo}&pageSize=25", json_clazz=RoleRelUsers)
     @cjen.step.call(stepName=PortalFindNoRelUser.Name, argName="users")
     def userrole_get_no_relations_users(self, path_variable, data, users: RoleRelUsers, resp=None, **kwargs):
@@ -236,4 +232,3 @@ class PortalApi(PortalLoginService):
         if not self.context[PortalGetUserRole.Id]:
             if not user_role.nextPage() == 0:
                 self.userrole_api_get_user_roles(path_variable=dict(pageNo=user_role.nextPage()))
-

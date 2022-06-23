@@ -1,14 +1,14 @@
 from cjen.sco.scenario import Scenario
 from cjen.sco.standard_step import StandardStep
 
-from eclinical.standard.portal.hierarchies import Hierarchies
+
 from eclinical.standard.scenarios.portal_scenario import PortalScenario
 
 
 class PortalLifeCycle(StandardStep):
     Name = "portal_life_cycle"
 
-    def __init__(self, service: Hierarchies, scenario: PortalScenario):
+    def __init__(self, service, scenario: PortalScenario):
         self.service = service
         self.scenario = scenario
         self.service.step_definitions[self.Name] = self

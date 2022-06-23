@@ -2,7 +2,7 @@ import jsonpath
 from cjen.sco.scenario import Scenario
 from cjen.sco.standard_step import StandardStep
 
-from eclinical.standard.design.versioning import Versioning
+from eclinical.standard.design.design_api import Versioning
 
 
 # 获取最后提交得版本信息

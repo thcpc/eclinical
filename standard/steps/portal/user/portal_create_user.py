@@ -1,7 +1,7 @@
 from cjen.sco.scenario import Scenario
 from cjen.sco.standard_step import StandardStep
 
-from eclinical.standard.portal.user import User
+
 from eclinical.standard.scenarios.portal_scenario import PortalScenario
 from eclinical.standard.steps.portal.user.portal_find_user import PortalFindUser
 
@@ -9,7 +9,7 @@ from eclinical.standard.steps.portal.user.portal_find_user import PortalFindUser
 class PortalCreateUser(StandardStep):
     Name = "portal_create_user.py"
 
-    def __init__(self, service: User, scenario: PortalScenario):
+    def __init__(self, service, scenario: PortalScenario):
         self.service = service
         self.scenario = scenario
         self.service.step_definitions[self.Name] = self

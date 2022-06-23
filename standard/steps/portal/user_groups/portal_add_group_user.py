@@ -1,7 +1,7 @@
 
 from cjen.sco.standard_step import StandardStep
 
-from eclinical.standard.portal.user_groups import UserGroups
+
 from eclinical.standard.scenarios.portal_scenario import PortalScenario
 from eclinical.standard.steps.portal.user_groups.portal_find_un_added_user import PortalFindUnAddedUser
 
@@ -9,7 +9,7 @@ from eclinical.standard.steps.portal.user_groups.portal_find_un_added_user impor
 class PortalAddGroupUser(StandardStep):
     Name = "portal_add_group_user.py"
 
-    def __init__(self, service: UserGroups, scenario: PortalScenario):
+    def __init__(self, service, scenario: PortalScenario):
         self.service = service
         self.scenario = scenario
         self.service.step_definitions[self.Name] = self

@@ -1,7 +1,6 @@
 from cjen.sco.standard_step import StandardStep
 
-from eclinical.standard.portal.user import User
-from eclinical.standard.portal.user_groups import UserGroups
+
 from eclinical.standard.scenarios.portal_scenario import PortalScenario
 from eclinical.standard.steps.portal.user.portal_associated_usergroup import PortalAssociatedUserGroup
 from eclinical.standard.steps.portal.user.portal_find_user import PortalFindUser
@@ -12,7 +11,7 @@ from eclinical.standard.steps.portal.user_groups.portal_find_usergroup import Po
 class PortalUserAppendUserGroup(StandardStep):
     Name = "portal_user_append_usergroup.py"
 
-    def __init__(self, service: User, scenario: PortalScenario):
+    def __init__(self, service, scenario: PortalScenario):
         self.service = service
         self.scenario = scenario
         self.service.step_definitions[self.Name] = self
