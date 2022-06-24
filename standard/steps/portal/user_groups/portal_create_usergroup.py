@@ -10,9 +10,8 @@ class PortalCreateUserGroup(StandardStep):
     Name = "portal_create_user_group"
 
     def __init__(self, service, scenario: PortalScenario):
-        self.service = service
-        self.scenario = scenario
-        self.service.step_definitions[self.Name] = self
+        super().__init__(service, scenario)
+
 
     def _pre_processor(self):
         PortalFindUserGroup(self.service, self.scenario).run()
@@ -23,6 +22,7 @@ class PortalCreateUserGroup(StandardStep):
     def code(self): return self.scenario.user_group()
 
     def _execute(self):
+        super()._execute()
         if self.service.context[PortalFindUserGroup.Id] is None:
             self.service.usergroups_create_user_group(data=self.data())
 

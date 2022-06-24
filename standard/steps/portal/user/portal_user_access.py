@@ -10,16 +10,17 @@ class PortalUserAccess(StandardStep):
     StudiesId = "user_access_permission_studies_id"
 
     def __init__(self, service, scenario: PortalScenario):
-        self.service = service
-        self.scenario = scenario
-        self.service.step_definitions[self.Name] = self
+        super().__init__(service, scenario)
+
 
     def _pre_processor(self):
         PortalFindUser(self.service, self.scenario).run()
 
     def path_variable(self): return {"user_id": self.service.context[PortalFindUser.Id]}
 
-    def _execute(self): self.service.user_api_user_access(path_variable=self.path_variable())
+    def _execute(self):
+        super()._execute()
+        self.service.user_api_user_access(path_variable=self.path_variable())
 
     def call_back(self, **kwargs):
         id_of_studies = set()

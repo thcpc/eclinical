@@ -11,9 +11,8 @@ class PortalFindNoRelUser(StandardStep):
     Id = "No_REL_USER"
 
     def __init__(self, service, scenario: PortalScenario):
-        self.service = service
-        self.scenario = scenario
-        self.service.step_definitions[self.Name] = self
+        super().__init__(service, scenario)
+
 
     def _pre_processor(self):
         PortalGetUserRole(self.service, self.scenario).run()
@@ -28,6 +27,7 @@ class PortalFindNoRelUser(StandardStep):
         return self.scenario.user().upper()
 
     def _execute(self):
+        super()._execute()
         self.service.userrole_get_no_relations_users(path_variable=self.path_variable(), data=self.data())
 
     def call_back(self, **kwargs):

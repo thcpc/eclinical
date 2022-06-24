@@ -1,3 +1,4 @@
+from cjen import BigTangerine
 from cjen.sco.scenario import Scenario
 from cjen.sco.standard_step import StandardStep
 
@@ -8,10 +9,9 @@ class PortalGetUserRole(StandardStep):
     Name = "portal_get_user_role.py"
     Id = "portal_user_role_id"
 
-    def __init__(self, service, scenario: PortalScenario):
-        self.service = service
-        self.scenario = scenario
-        self.service.step_definitions[self.Name] = self
+    def __init__(self, service: BigTangerine, scenario: PortalScenario):
+        super().__init__(service, scenario)
+
 
     def _pre_processor(self): ...
 
@@ -20,7 +20,9 @@ class PortalGetUserRole(StandardStep):
 
     def role(self): return self.scenario.role()
 
-    def _execute(self): self.service.userrole_api_get_user_roles(path_variable=self.path_variable())
+    def _execute(self):
+        super()._execute()
+        self.service.userrole_api_get_user_roles(path_variable=self.path_variable())
 
     def call_back(self, **kwargs):
         self.service.context[self.Id] = None

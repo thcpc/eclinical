@@ -9,9 +9,7 @@ class PortalCreateSponsor(StandardStep):
     Name = "portal_create_sponsor.py"
 
     def __init__(self, service, scenario: PortalScenario):
-        self.service = service
-        self.scenario = scenario
-        self.service.step_definitions[self.Name] = self
+        super().__init__(service, scenario)
 
     def _pre_processor(self):
         PortalFindSponsor(self.service, self.scenario).run()
@@ -24,4 +22,6 @@ class PortalCreateSponsor(StandardStep):
     def data(self):
         return {"name": self.sponsor_name(), "description": "", "active": True}
 
-    def _execute(self): self.service.hierarchies_new_sponsor(data=self.data())
+    def _execute(self):
+        super()._execute()
+        self.service.hierarchies_new_sponsor(data=self.data())

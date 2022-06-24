@@ -10,9 +10,8 @@ class PortalCreateUser(StandardStep):
     Name = "portal_create_user.py"
 
     def __init__(self, service, scenario: PortalScenario):
-        self.service = service
-        self.scenario = scenario
-        self.service.step_definitions[self.Name] = self
+        super().__init__(service, scenario)
+
 
     def _pre_processor(self): PortalFindUser(self.service, self.scenario).run()
 
@@ -32,4 +31,6 @@ class PortalCreateUser(StandardStep):
             "phoneNumber": "88888888",
             "email": f'{self.login_name()}@163.com', "active": True, "etmfAdministrator": False}
 
-    def _execute(self): self.service.user_api_create_user(data=self.data())
+    def _execute(self):
+        super()._execute()
+        self.service.user_api_create_user(data=self.data())

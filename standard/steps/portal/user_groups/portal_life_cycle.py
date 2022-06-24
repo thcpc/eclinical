@@ -9,9 +9,8 @@ class PortalLifeCycle(StandardStep):
     Name = "portal_life_cycle"
 
     def __init__(self, service, scenario: PortalScenario):
-        self.service = service
-        self.scenario = scenario
-        self.service.step_definitions[self.Name] = self
+        super().__init__(service, scenario)
+
 
     def call_back(self, **kwargs):
         for env in kwargs.get("envs").payload():
@@ -22,4 +21,5 @@ class PortalLifeCycle(StandardStep):
         return self.scenario.life_cycle()
 
     def _execute(self):
+        super()._execute()
         self.service.hierarchies_get_env_list(life_cycle=self.life_cycle())

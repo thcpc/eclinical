@@ -10,9 +10,8 @@ class DesignGetLastVersion(StandardStep):
     Name = "design_get_last_version"
 
     def __init__(self, service: Versioning, scenario: Scenario):
-        self.service = service
-        self.scenario = scenario
-        self.service.step_definitions[self.Name] = self
+        super().__init__(service, scenario)
+
 
     def call_back(self, **kwargs):
         current = kwargs.get("version_info").current_version()
@@ -20,4 +19,6 @@ class DesignGetLastVersion(StandardStep):
             self.service.context["currentVersionId"] = current.get("id")
         else: raise Exception("The CRF has not Submit")
 
-    def _execute(self): self.service.version_list()
+    def _execute(self):
+        super()._execute()
+        self.service.version_list()

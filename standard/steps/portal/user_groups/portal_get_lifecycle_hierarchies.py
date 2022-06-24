@@ -15,9 +15,8 @@ class PortalGetLifeCycleHierarchies(StandardStep):
     Tree = "hierarchies"
 
     def __init__(self, service, scenario: PortalScenario):
-        self.service = service
-        self.scenario = scenario
-        self.service.step_definitions[self.Name] = self
+        super().__init__(service, scenario)
+
 
     def _pre_processor(self):
         PortalGetCompanyEnvs(self.service, self.scenario).run()
@@ -40,4 +39,5 @@ class PortalGetLifeCycleHierarchies(StandardStep):
                                                         self.service.context[PortalFindUserGroup.Id])
 
     def _execute(self):
+        super()._execute()
         self.service.usergroups_api_get_lifecycle_hierarchies(path_variable=self.path_variable())

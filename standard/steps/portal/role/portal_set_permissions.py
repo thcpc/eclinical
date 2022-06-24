@@ -10,9 +10,8 @@ class PortalSetPermissions(StandardStep):
     Name = "portal_set_permissions.py"
 
     def __init__(self, service, scenario: PortalScenario):
-        self.service = service
-        self.scenario = scenario
-        self.service.step_definitions[self.Name] = self
+        super().__init__(service, scenario)
+
 
     def _pre_processor(self):
         PortalFindRole(self.service, self.scenario).run()
@@ -26,4 +25,5 @@ class PortalSetPermissions(StandardStep):
         return dict(role_id=self.service.context[PortalFindRole.Id])
 
     def _execute(self):
+        super()._execute()
         self.service.role_api_set_permissions(path_variable=self.path_variable(), data=self.data())

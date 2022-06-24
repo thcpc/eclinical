@@ -1,11 +1,14 @@
 import cjen
-from cjen.sco.step_definitions import StepDefinitions
 
 from eclinical import CTMSLoginService, Environment
 from eclinical.standard.base.ok_response import OkResponse
+from eclinical.standard.ctms.dto.country import Countries
+from eclinical.standard.ctms.dto.menus import Menus
 from eclinical.standard.ctms.dto.site_entities import SiteEntities
 from eclinical.standard.ctms.dto.sites_of_study import SitesOfStudy
 from eclinical.standard.ctms.dto.studies import Studies
+from eclinical.standard.steps.ctms.ctms_all_menu import CtmsAllMenu
+from eclinical.standard.steps.ctms.ctms_common_country import CtmsCommonCountry
 from eclinical.standard.steps.ctms.ctms_find_site import CtmsFindSite
 from eclinical.standard.steps.ctms.ctms_find_study import CtmsFindStudy
 from eclinical.standard.steps.ctms.ctms_find_study_site import CtmsFindStudySite
@@ -14,6 +17,16 @@ from eclinical.standard.steps.ctms.ctms_find_study_site import CtmsFindStudySite
 class CtmsApi(CTMSLoginService):
     def __init__(self, environment: Environment = None):
         super().__init__(environment)
+
+    @cjen.http.get_mapping(uri="ctms/user/location/0/menu", json_clazz=Menus)
+    @cjen.step.call(stepName=CtmsAllMenu.Name, argName="menus")
+    def common_menu(self, menus: Menus, resp=None, **kwargs):
+        ...
+
+    @cjen.http.get_mapping(uri="ctms/common/country", json_clazz=Countries)
+    @cjen.step.call(stepName=CtmsCommonCountry.Name, argName="countries")
+    def common_country(self, countries: Countries, resp=None, **kwargs):
+        ...
 
     @cjen.http.post_mapping(uri="ctms/site/information/list?pageNo={pageNo}&pageSize=25", json_clazz=SitesOfStudy)
     @cjen.step.call(stepName=CtmsFindStudySite.Name, argName="query")
@@ -28,12 +41,17 @@ class CtmsApi(CTMSLoginService):
             if not site_entities.nextPage() == 0:
                 self.entity_management_site_list(path_variable=dict(pageNo=site_entities.nextPage()))
 
+    @cjen.http.upload_mapping(uri="ctms/entity/site/info/save")
+    def entity_management_add_site(self, path_variable, data, resp=None, **kwargs):
+        ...
+
     @cjen.http.post_mapping(uri="ctms/study/basic/info", json_clazz=OkResponse)
     def study_management_submit_info(self, data, ok: OkResponse, resp=None, **kwargs):
         ...
 
-    @cjen.http.upload_mapping(uri="ctms/site/basic/info")
-    def study_management_add_site(self, data, resp=None, **kwargs):
+    @cjen.http.upload_mapping(uri="ctms/site/basic/info", json_clazz=OkResponse)
+    @cjen.operate.asserts.validation_meta(meta_name="ok", fields="procCode")
+    def study_management_add_site(self, data, ok: OkResponse, resp=None, **kwargs):
         ...
 
     @cjen.http.post_mapping(uri="ctms/study/query?pageNo=1&pageSize=25", json_clazz=Studies)

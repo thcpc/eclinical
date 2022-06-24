@@ -10,9 +10,7 @@ class PortalFindUserGroup(StandardStep):
     Id = "user_group_id"
 
     def __init__(self, service, scenario: PortalScenario):
-        self.service = service
-        self.scenario = scenario
-        self.service.step_definitions[self.Name] = self
+        super().__init__(service, scenario)
 
     def user_group(self):
         return self.scenario.user_group()
@@ -24,4 +22,5 @@ class PortalFindUserGroup(StandardStep):
                 self.service.context[self.Id] = user_group.id()
 
     def _execute(self):
+        super()._execute()
         self.service.usergroups_get_user_group(path_variable=dict(pageNo=1))

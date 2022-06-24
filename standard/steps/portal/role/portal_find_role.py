@@ -10,9 +10,8 @@ class PortalFindRole(StandardStep):
     Id = "role_id"
 
     def __init__(self, service, scenario: PortalScenario):
-        self.service = service
-        self.scenario = scenario
-        self.service.step_definitions[self.Name] = self
+        super().__init__(service, scenario)
+
 
     def path_variable(self): return dict(pageNo=1)
 
@@ -26,4 +25,5 @@ class PortalFindRole(StandardStep):
                 self.service.context[self.Id] = role.id()
 
     def _execute(self):
+        super()._execute()
         self.service.role_api_query(path_variable=self.path_variable())

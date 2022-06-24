@@ -9,14 +9,15 @@ class DesignDownloadPublishSql(StandardStep):
     Name = "design_download_publish_sql.py"
 
     def __init__(self, service: Versioning, scenario: Scenario):
-        self.service = service
-        self.scenario = scenario
-        self.service.step_definitions[self.Name] = self
+        super().__init__(service, scenario)
+
 
     def _pre_processor(self):
         DesignFileIDS(self.service, self.scenario).run()
 
-    def _execute(self): self.service.download_file(data=self.data())
+    def _execute(self):
+        super()._execute()
+        self.service.download_file(data=self.data())
 
     def data(self):
         sql_file_id = self.service.context["archives"].db_spec().get("fileId") - 1

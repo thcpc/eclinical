@@ -9,9 +9,8 @@ class PortalCreateRole(StandardStep):
     Name = "portal_create_role.py"
 
     def __init__(self, service, scenario: PortalScenario):
-        self.service = service
-        self.scenario = scenario
-        self.service.step_definitions[self.Name] = self
+        super().__init__(service, scenario)
+
 
     def _pre_processor(self):
         PortalFindRole(self.service, self.scenario).run()
@@ -27,4 +26,6 @@ class PortalCreateRole(StandardStep):
     def data(self):
         return dict(category=self.category(), code=self.code(), subCode=self.subCode(), description="Test", active=True)
 
-    def _execute(self): self.service.role_api_create_role(data=self.data())
+    def _execute(self):
+        super()._execute()
+        self.service.role_api_create_role(data=self.data())

@@ -11,9 +11,8 @@ class PortalStartSponsor(StandardStep):
     Name = "portal_startup_sponsor.py"
 
     def __init__(self, service, scenario: PortalScenario):
-        self.service = service
-        self.scenario = scenario
-        self.service.step_definitions[self.Name] = self
+        super().__init__(service, scenario)
+
 
     def _pre_processor(self):
         PortalFindSponsor(self.service, self.scenario).run()
@@ -23,6 +22,7 @@ class PortalStartSponsor(StandardStep):
         return not self.service.context[PortalSponsorNoStart.System]
 
     def _execute(self):
+        super()._execute()
         self.service.hierarchies_sponsor_startup(
             data=self.data(),
             path_variable=self.path_variable())

@@ -8,15 +8,15 @@ class CtmsFindStudy(StandardStep):
     Info = "ctms_study_dto"
 
     def __init__(self, service, scenario: CtmsScenario):
-        self.service = service
-        self.scenario = scenario
-        self.service.step_definitions[self.Name] = self
+        super().__init__(service, scenario)
+        self.service.context[self.Info] = None
 
     def call_back(self, **kwargs):
-        self.service.context[self.Info] = None
+
         for study in kwargs.get("studies").list():
             if study.name() == self.scenario.study():
                 self.service.context[self.Info] = dict(id=study.id(), name=study.name())
 
     def _execute(self):
+        super()._execute()
         self.service.study_management_get_study()

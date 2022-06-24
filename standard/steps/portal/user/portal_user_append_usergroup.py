@@ -12,9 +12,8 @@ class PortalUserAppendUserGroup(StandardStep):
     Name = "portal_user_append_usergroup.py"
 
     def __init__(self, service, scenario: PortalScenario):
-        self.service = service
-        self.scenario = scenario
-        self.service.step_definitions[self.Name] = self
+        super().__init__(service, scenario)
+
 
     def _pre_processor(self):
         PortalFindUserGroup(self.service, self.scenario).run()
@@ -46,4 +45,5 @@ class PortalUserAppendUserGroup(StandardStep):
         return rels
 
     def _execute(self):
+        super()._execute()
         self.service.user_api_append_user_group_role_rel(path_variable=self.path_variable(), data=self.data())

@@ -10,9 +10,8 @@ class PortalStartupStudy(StandardStep):
     Name = "portal_startup_study"
 
     def __init__(self, service, scenario: PortalScenario):
-        self.service = service
-        self.scenario = scenario
-        self.service.step_definitions[self.Name] = self
+        super().__init__(service, scenario)
+
 
     def _pre_processor(self):
         PortalFindStudy(self.service, self.scenario).run()
@@ -22,6 +21,7 @@ class PortalStartupStudy(StandardStep):
         return not self.service.context[PortalStudyNoStart.System]
 
     def _execute(self):
+        super()._execute()
         self.service.hierarchies_study_startup(
             data=self.data(),
             path_variable=self.path_variable())

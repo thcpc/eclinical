@@ -13,9 +13,8 @@ class PortalSetLifeCycleHierarchies(StandardStep):
     Name = "portal_set_lifecycle_hierarchies.py"
 
     def __init__(self, service, scenario: PortalScenario):
-        self.service = service
-        self.scenario = scenario
-        self.service.step_definitions[self.Name] = self
+        super().__init__(service, scenario)
+
 
     def life_cycle(self): return self.scenario.life_cycle()
 
@@ -28,8 +27,8 @@ class PortalSetLifeCycleHierarchies(StandardStep):
         for life_cycle in self.service.context[PortalGetCompanyEnvs.Object]:
             for life_cycle_name, life_cycle_id in life_cycle.items():
                 if life_cycle_name == self.life_cycle():
-                    return {UserGroups.LifeCycleId: life_cycle_id, UserGroups.UserGroupId: self.service.context[PortalFindUserGroup.Id]}
-        return {UserGroups.LifeCycleId: None}
+                    return {"life_cycle_id": life_cycle_id, "userGroup_id": self.service.context[PortalFindUserGroup.Id]}
+        return {"life_cycle_id": None}
 
     def sponsor_name(self):
         return self.scenario.sponsor()
@@ -53,4 +52,5 @@ class PortalSetLifeCycleHierarchies(StandardStep):
         return [sponsor.to_dict() for sponsor in self.service.context["hierarchies"]]
 
     def _execute(self):
+        super()._execute()
         self.service.usergroups_api_set_lifecycle_hierarchies(data=self.data(), path_variable=self.path_variable())

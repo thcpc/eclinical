@@ -11,9 +11,8 @@ class PortalGetCompanyEnvs(StandardStep):
     Object = "envObjects"
 
     def __init__(self, service, scenario: PortalScenario):
-        self.service = service
-        self.scenario = scenario
-        self.service.step_definitions[self.Name] = self
+        super().__init__(service, scenario)
+
 
     def _pre_processor(self): ...
 
@@ -22,4 +21,6 @@ class PortalGetCompanyEnvs(StandardStep):
         self.service.context[self.Object] = [{f'{company_env.name()}': company_env.id()} for company_env in
                                               kwargs.get("company_envs").list()]
 
-    def _execute(self): self.service.usergroups_api_company_envs()
+    def _execute(self):
+        super()._execute()
+        self.service.usergroups_api_company_envs()

@@ -11,9 +11,7 @@ class PortalCreateStudy(StandardStep):
     Name = "portal_create_study"
 
     def __init__(self, service, scenario: PortalScenario):
-        self.service = service
-        self.scenario = scenario
-        self.service.step_definitions[self.Name] = self
+        super().__init__(service, scenario)
 
     def _pre_processor(self):
         PortalFindSponsor(self.service, self.scenario).run()
@@ -23,6 +21,7 @@ class PortalCreateStudy(StandardStep):
         return self.service.context[PortalFindStudy.Id] is not None
 
     def _execute(self):
+        super()._execute()
         self.service.hierarchies_new_study(data=self.data())
 
     def study(self): return self.scenario.study()

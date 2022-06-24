@@ -11,15 +11,15 @@ class PortalStudyNoStart(StandardStep):
     System = "not_startup_study"
 
     def __init__(self, service, scenario: PortalScenario):
-        self.service = service
-        self.scenario = scenario
-        self.service.step_definitions[self.Name] = self
+        super().__init__(service, scenario)
+
 
     def _pre_processor(self):
         if not self.service.context[PortalFindStudy.Id]:
             PortalFindStudy(self.service, self.scenario).run()
 
     def _execute(self):
+        super()._execute()
         self.service.hierarchies_study_systems(path_variable=self.path_variable())
 
     def life_cycle(self):

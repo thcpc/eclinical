@@ -9,9 +9,8 @@ class PortalFindUser(StandardStep):
     Id = "user_id"
 
     def __init__(self, service, scenario: PortalScenario):
-        self.service = service
-        self.scenario = scenario
-        self.service.step_definitions[self.Name] = self
+        super().__init__(service, scenario)
+
 
     def user_name(self):
         return self.scenario.user().upper()
@@ -23,4 +22,5 @@ class PortalFindUser(StandardStep):
                 self.service.context[self.Id] = user.id()
 
     def _execute(self):
+        super()._execute()
         self.service.user_api_user_query(path_variable=dict(pageNo=1))

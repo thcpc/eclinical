@@ -9,9 +9,7 @@ class CtmsSubmitStudyBasicInfo(StandardStep):
     Name = "ctms_submit_study_basic_info.py"
 
     def __init__(self, service, scenario: CtmsScenario):
-        self.service = service
-        self.scenario = scenario
-        self.service.step_definitions[self.Name] = self
+        super().__init__(service, scenario)
 
     def _pre_processor(self):
         CtmsFindStudy(self.service, self.scenario).run()
@@ -37,4 +35,6 @@ class CtmsSubmitStudyBasicInfo(StandardStep):
             "studyType": 0
         }
 
-    def _execute(self): self.service.study_management_submit_info(data=self.data())
+    def _execute(self):
+        super()._execute()
+        self.service.study_management_submit_info(data=self.data())

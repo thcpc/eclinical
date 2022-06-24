@@ -10,9 +10,7 @@ class PortalGetPermissionTree(StandardStep):
     IdOfAllPermission = "all_permissions_ids"
 
     def __init__(self, service, scenario: PortalScenario):
-        self.service = service
-        self.scenario = scenario
-        self.service.step_definitions[self.Name] = self
+        super().__init__(service, scenario)
 
     def _pre_processor(self):
         PortalFindRole(self.service, self.scenario).run()
@@ -21,6 +19,7 @@ class PortalGetPermissionTree(StandardStep):
         return dict(role_id=self.service.context[PortalFindRole.Id])
 
     def _execute(self):
+        super()._execute()
         self.service.role_api_all_permission_tree(path_variable=self.path_variable())
 
     def call_back(self, **kwargs):

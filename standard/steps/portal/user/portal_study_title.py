@@ -10,9 +10,8 @@ class PortalStudyTitle(StandardStep):
     Name = "portal_study_title.py"
 
     def __init__(self, service, scenario: PortalScenario):
-        self.service = service
-        self.scenario = scenario
-        self.service.step_definitions[self.Name] = self
+        super().__init__(service, scenario)
+
 
     def _pre_processor(self): ...
 
@@ -26,4 +25,5 @@ class PortalStudyTitle(StandardStep):
                 for study_id in self.service.context[PortalUserAccess.StudiesId]]
 
     def _execute(self):
+        super()._execute()
         self.service.user_api_study_title(path_variable=self.path_variable(), data=self.data())

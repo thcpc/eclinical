@@ -11,9 +11,8 @@ class PortalFindSponsor(StandardStep):
     Id = "sponsor_id"
 
     def __init__(self, service, scenario: PortalScenario):
-        self.service = service
-        self.scenario = scenario
-        self.service.step_definitions[self.Name] = self
+        super().__init__(service, scenario)
+
 
     def sponsor(self):
         return self.scenario.sponsor()
@@ -25,6 +24,7 @@ class PortalFindSponsor(StandardStep):
         print(self.service.context[self.Id])
 
     def _execute(self):
+        super()._execute()
         self.service.hierarchies_get_sponsor(name=self.sponsor(), path_variable=self.path_variable())
 
     def call_back(self, **kwargs):

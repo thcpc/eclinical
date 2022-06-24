@@ -10,9 +10,8 @@ class PortalAddGroupUser(StandardStep):
     Name = "portal_add_group_user.py"
 
     def __init__(self, service, scenario: PortalScenario):
-        self.service = service
-        self.scenario = scenario
-        self.service.step_definitions[self.Name] = self
+        super().__init__(service, scenario)
+
 
     def _pre_processor(self):
         PortalFindUnAddedUser(self.service, self.scenario).run()
@@ -20,6 +19,7 @@ class PortalAddGroupUser(StandardStep):
     def ignore(self): return self.service.context["user_id"] is None
 
     def _execute(self):
+        super()._execute()
         self.service.usergroups_api_add_group_user(path_variable=self.path_variable(), data=self.data())
 
     def path_variable(self): return dict(userGroup_id=self.service.context["user_group_id"])

@@ -9,14 +9,14 @@ class PortalFindUserRole(StandardStep):
     Id = "user_role_id"
 
     def __init__(self, service, scenario: PortalScenario):
-        self.service = service
-        self.scenario = scenario
-        self.service.step_definitions[self.Name] = self
+        super().__init__(service, scenario)
+
 
     def role(self):
         return self.scenario.role()
 
     def _execute(self):
+        super()._execute()
         self.service.user_api_role_list()
 
     def call_back(self, **kwargs):

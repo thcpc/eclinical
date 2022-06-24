@@ -10,9 +10,8 @@ class PortalGetUserGroupInfo(StandardStep):
     Name = "portal_get_user_group_info"
 
     def __init__(self, service, scenario: PortalScenario):
-        self.service = service
-        self.scenario = scenario
-        self.service.step_definitions[self.Name] = self
+        super().__init__(service, scenario)
+
 
     def _pre_processor(self):
         PortalFindUserGroup(self.service, self.scenario).run()
@@ -27,6 +26,8 @@ class PortalGetUserGroupInfo(StandardStep):
     def _post_processor(self):
         print("company_multiple_env_id", self.service.context["company_multiple_env_id"])
 
-    def _execute(self): self.service.usergroups_user_group_info(path_variable=self.path_variable())
+    def _execute(self):
+        super()._execute()
+        self.service.usergroups_user_group_info(path_variable=self.path_variable())
 
     def path_variable(self): return dict(userGroup_id=self.service.context["user_group_id"])

@@ -10,9 +10,8 @@ class PortalAssociatedUserGroup(StandardStep):
     ExistsRels = "exists_user_rels"
 
     def __init__(self, service, scenario: PortalScenario):
-        self.service = service
-        self.scenario = scenario
-        self.service.step_definitions[self.Name] = self
+        super().__init__(service, scenario)
+
 
     def _pre_processor(self):
         PortalFindUser(self.service, self.scenario).run()
@@ -21,6 +20,7 @@ class PortalAssociatedUserGroup(StandardStep):
         return dict(user_id=self.service.context[PortalFindUser.Id])
 
     def _execute(self):
+        super()._execute()
         self.service.user_api_user_group_role_rel(path_variable=self.path_variable())
 
     def call_back(self, **kwargs):

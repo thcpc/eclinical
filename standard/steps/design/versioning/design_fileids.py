@@ -10,9 +10,8 @@ class DesignFileIDS(StandardStep):
     Name = "design_fileids.py"
 
     def __init__(self, service: Versioning, scenario: Scenario):
-        self.service = service
-        self.scenario = scenario
-        self.service.step_definitions[self.Name] = self
+        super().__init__(service, scenario)
+
 
     def _pre_processor(self):
         DesignGetLastVersion(self.service, self.scenario).run()
