@@ -2,8 +2,8 @@ from cjen.sco.scenario import Scenario
 
 
 class CtmsScenario(Scenario):
-    def __init__(self, scenario_dir):
-        super().__init__(scenario_dir)
+    def __init__(self, scenario_dir, service=None):
+        super().__init__(scenario_dir, service)
 
     def sponsor(self):
         return self.get("sponsor").get("name")

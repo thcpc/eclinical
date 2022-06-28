@@ -42,7 +42,7 @@ class CtmsApi(CTMSLoginService):
                 self.entity_management_site_list(path_variable=dict(pageNo=site_entities.nextPage()))
 
     @cjen.http.upload_mapping(uri="ctms/entity/site/info/save")
-    def entity_management_add_site(self, path_variable, data, resp=None, **kwargs):
+    def entity_management_add_site(self, data, resp=None, **kwargs):
         ...
 
     @cjen.http.post_mapping(uri="ctms/study/basic/info", json_clazz=OkResponse)

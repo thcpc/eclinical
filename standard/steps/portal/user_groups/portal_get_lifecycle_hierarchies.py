@@ -17,7 +17,6 @@ class PortalGetLifeCycleHierarchies(StandardStep):
     def __init__(self, service, scenario: PortalScenario):
         super().__init__(service, scenario)
 
-
     def _pre_processor(self):
         PortalGetCompanyEnvs(self.service, self.scenario).run()
 

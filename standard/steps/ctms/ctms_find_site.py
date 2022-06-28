@@ -21,7 +21,7 @@ class CtmsFindSite(StandardStep):
 
     def ignore(self):
         try:
-            for value in self.service.context[self.Info]:
+            for key, value in self.service.context[self.Info].items():
                 if value == self.NoFill: return False
             return True
         except Exception as e:
@@ -32,7 +32,6 @@ class CtmsFindSite(StandardStep):
                and self.service.context[self.Info].get(site_entity.siteName()) == self.NoFill
 
     def call_back(self, **kwargs):
-
         for site_entity in kwargs.get("site_entities").list():
             if self.need_fill(site_entity):
                 self.service.context[self.Info][site_entity.siteName()] = site_entity.id()

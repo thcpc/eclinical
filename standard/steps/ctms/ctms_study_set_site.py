@@ -12,21 +12,27 @@ class CtmsStudySetSite(StandardStep):
     def __init__(self, service, scenario: CtmsScenario):
         super().__init__(service, scenario)
 
-    def sites(self): return self.scenario.sites()
+    def sites(self):
+        return self.scenario.sites()
 
     def _pre_processor(self):
         CtmsFindSite(self.service, self.scenario).run()
         CtmsFindStudySite(self.service, self.scenario).run()
 
     def data(self):
-        return [{"siteId": self.service.context[CtmsFindSite.Info].get(site_name),
-                 "siteName": site_name,
-                 "siteCode": site_name,
+        site_codes = []
+        for site_code in self.sites():
+            for exist_site in self.service.context[CtmsFindStudySite.Info]:
+                if exist_site.siteCode() == site_code: continue
+            site_codes.append(site_code)
+        return [{"siteId": f"{self.service.context[CtmsFindSite.Info].get(site_code)}",
+                 "siteName": site_code,
+                 "siteCode": site_code,
                  "timezoneId": '0',
                  "languageId": '2',
                  "expectedSubject": '100',
-                 "studyId": self.service.context[CtmsFindStudy.Id],
-                 "menuId": '5080', } for site_name in self.sites()]
+                 "studyId": f'{self.service.context[CtmsFindStudy.Info].get("id")}',
+                 "menuId": '5080', } for site_code in site_codes]
 
     def _execute(self):
         super()._execute()

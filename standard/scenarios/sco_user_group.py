@@ -36,7 +36,7 @@ class ScoUserGroup:
 
 if __name__ == '__main__':
     sco_dir = os.path.join("new_study")
-    sco = ScoUserGroup(sco_dir,  Environment.loader("DEV_01"))
+    sco = ScoUserGroup(sco_dir,  Environment.loader("DEV_03"))
     sco.run()
     # a = "a"
     # print(f'{{a}}')

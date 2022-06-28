@@ -4,7 +4,7 @@ from cjen import MetaJson
 
 class Country(MetaJson):
     @cjen.operate.common.value
-    @cjen.operate.json.one(json_path="$.name+")
+    @cjen.operate.json.one(json_path="$.name")
     def name(self): ...
 
     @cjen.operate.common.value

@@ -12,7 +12,6 @@ class CtmsCreateSiteEntity(StandardStep):
     def __init__(self, service, scenario: CtmsScenario):
         super().__init__(service, scenario)
 
-
     def _pre_processor(self):
         CtmsCommonCountry(self.service, self.scenario).run()
         CtmsAllMenu(self.service, self.scenario).run()
@@ -24,19 +23,27 @@ class CtmsCreateSiteEntity(StandardStep):
         return self.service.context[CtmsCommonCountry.Country].get("Afghanistan")
 
     def find_menu_id(self, menus_code, menu_tree, level=0):
-        for menu in menu_tree:
-            if menu.get("code") == menus_code[level]:
-                return self.find_menu_id(menus_code, menu.get("children"), level + 1)
+        if menu_tree is not None:
+            for menu in menu_tree:
+                if menu.get("code") == menus_code[level]:
+                    if level + 1 == len(self.code_of_menus()): return menu.get("id")
+                    return self.find_menu_id(menus_code, menu.get("children"), level + 1)
         raise Exception(f'can not find {self.code_of_menus()}')
 
     def sites(self):
         return self.scenario.sites()
 
+    def ignore(self):
+        new_sites = list(filter(lambda dict_item: dict_item[1] == CtmsFindSite.NoFill, self.service.context[CtmsFindSite.Info].items()))
+        return len(new_sites) == 0
+
     def data(self):
         menu_id = self.find_menu_id(self.code_of_menus(), self.service.context[CtmsAllMenu.Menu])
         country_id = self.find_country_id()
+        new_sites = dict(filter(lambda dict_item: dict_item[1] == CtmsFindSite.NoFill, self.service.context[CtmsFindSite.Info].items()))
+
         return [
-            {"siteId": None,
+            {"siteId": "null",
              "siteName": site_name,
              "postalOrZoneCode": "0",
              "countryId": f'{country_id}',
@@ -46,9 +53,10 @@ class CtmsCreateSiteEntity(StandardStep):
              "fax": "",
              "email": "",
              "address": "China",
-             "active": True,
-             "menuId": f'{menu_id}'} for site_name, site_id in self.service.context[CtmsFindSite.Info].items()]
+             "active": "true",
+             "menuId": f'{menu_id}'} for site_name, site_id in new_sites.items()]
 
     def _execute(self):
         super()._execute()
-        ...
+        for d in self.data():
+            self.service.entity_management_add_site(data=d)
