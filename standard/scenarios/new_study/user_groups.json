@@ -1,8 +1,4 @@
 {
-    "sponsor": "chenpengcheng",
-    "lifeCycle": "dev",
-    "name": "CPCTest04",
-    "sites": ["D001", "D002", "D003"],
-    "User": "CPC01",
-    "userGroup": "Test Group"
+    "sites": ["YY02", "YY03", "YY04"],
+    "name": "edetek"
 }
