@@ -16,3 +16,5 @@ class CtmsScenario(Scenario):
 
     def sites(self):
         return self.get("user_groups").get("sites")
+
+    def apps(self): return self.get("study").get("apps")

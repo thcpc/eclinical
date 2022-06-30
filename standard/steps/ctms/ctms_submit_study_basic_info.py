@@ -14,6 +14,9 @@ class CtmsSubmitStudyBasicInfo(StandardStep):
     def _pre_processor(self):
         CtmsFindStudy(self.service, self.scenario).run()
 
+    def is_randomized(self):
+        return "IWRS" in self.scenario.apps()
+
     def data(self):
         return {
             "blindMethods": 0,
@@ -28,7 +31,7 @@ class CtmsSubmitStudyBasicInfo(StandardStep):
             "name": self.service.context[CtmsFindStudy.Info].get("name"),
             "numOfSite": 3,
             "numOfSubject": 100,
-            "randomize": True,
+            "randomize": self.is_randomized(),
             "saftyReview": False,
             "startDate": 1655971679755,
             "studyPhase": 1,

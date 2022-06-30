@@ -25,7 +25,7 @@ class ScoUserGroup:
         # 获取未添加到User Group中的 User
         self.scenario.append_step(PortalGetUserGroupInfo, service)
         # 把用户添加到User Group中
-        self.scenario.append_step(PortalAddGroupUser, service)
+        # self.scenario.append_step(PortalAddGroupUser, service)
         # 选择lifecycle, 获取对应lifecycle的sponsor, study, site 信息
         self.scenario.append_step(PortalGetLifeCycleHierarchies, service)
         # 分配 Sponsor, Study, Site

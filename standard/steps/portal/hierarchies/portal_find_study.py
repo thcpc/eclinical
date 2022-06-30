@@ -34,7 +34,7 @@ class PortalFindStudy(StandardStep):
         self.service.hierarchies_get_study(
             data=self.data(),
             path_variable=self.path_variable())
-        print(self.service.hierarchies_get_study.__name__)
+
 
     def data(self):
         return dict(sponsorId=self.service.context[PortalFindSponsor.Id])

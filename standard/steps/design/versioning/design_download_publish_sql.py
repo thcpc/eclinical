@@ -11,7 +11,6 @@ class DesignDownloadPublishSql(StandardStep):
     def __init__(self, service: Versioning, scenario: Scenario):
         super().__init__(service, scenario)
 
-
     def _pre_processor(self):
         DesignFileIDS(self.service, self.scenario).run()
 
