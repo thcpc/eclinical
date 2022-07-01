@@ -1,5 +1,9 @@
 import os
 
+from eclinical.standard.steps.portal.hierarchies.portal_find_study import PortalFindStudy
+
+from eclinical.standard.steps.portal.hierarchies.portal_find_sponsor import PortalFindSponsor
+
 from eclinical import Environment
 
 # 初始化整个公司账号的内容
@@ -19,19 +23,31 @@ class ScoInit:
 
     def run(self):
         # 创建 Sponsor
-        ScoCreateSponsor(self.scenario_dir, self.environment).run()
+        print("Portal 创建 Sponsor")
+        sco = ScoCreateSponsor(self.scenario_dir, self.environment)
+        sco.run()
+        print(f'{sco.scenario.sponsor()} Sponsor ID: {sco.scenario.service.context[PortalFindSponsor.Id]}')
         # 创建 Study
-        ScoCreateStudy(self.scenario_dir, self.environment).run()
+        print("Portal 创建 Study")
+        sco = ScoCreateStudy(self.scenario_dir, self.environment)
+        sco.run()
+        print(f'{sco.scenario.study()} Study ID: {sco.scenario.service.context[PortalFindStudy.Id]}')
         # 创建 Role
+        print("Portal 创建 Role")
         ScoCreateRole(self.scenario_dir, self.environment).run()
         # 创建 UserGroup
+        print("Portal 创建 User Group")
         ScoUserGroup(self.scenario_dir, self.environment).run()
         # 创建 User
+        print("Portal 创建 User")
         ScoCreateUser(self.scenario_dir, self.environment).run()
         # 创建 CTMS SITE
+        print("CTMS 创建Site")
         ScoCtmsStudy(self.scenario_dir, self.environment).run()
         # Portal 中分配Site
+        print("Portal 为User Group 创建Site")
         ScoUserGroup(self.scenario_dir, self.environment).run()
+        print("Finish")
 
 
 if __name__ == '__main__':

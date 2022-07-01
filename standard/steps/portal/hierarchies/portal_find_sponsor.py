@@ -1,7 +1,6 @@
 from cjen.sco.scenario import Scenario
 from cjen.sco.standard_step import StandardStep
 
-
 from eclinical.standard.scenarios.portal_scenario import PortalScenario
 from eclinical.standard.steps.portal.user_groups.portal_life_cycle import PortalLifeCycle
 
@@ -13,15 +12,11 @@ class PortalFindSponsor(StandardStep):
     def __init__(self, service, scenario: PortalScenario):
         super().__init__(service, scenario)
 
-
     def sponsor(self):
         return self.scenario.sponsor()
 
     def _pre_processor(self):
         PortalLifeCycle(self.service, self.scenario).run()
-
-    def _post_processor(self):
-        print(self.service.context[self.Id])
 
     def _execute(self):
         super()._execute()

@@ -1,7 +1,6 @@
 from cjen.sco.scenario import Scenario
 from cjen.sco.standard_step import StandardStep
 
-
 from eclinical.standard.scenarios.portal_scenario import PortalScenario
 
 
@@ -10,7 +9,6 @@ class PortalLifeCycle(StandardStep):
 
     def __init__(self, service, scenario: PortalScenario):
         super().__init__(service, scenario)
-
 
     def call_back(self, **kwargs):
         for env in kwargs.get("envs").payload():

@@ -12,13 +12,11 @@ class PortalGetUserRole(StandardStep):
     def __init__(self, service: BigTangerine, scenario: PortalScenario):
         super().__init__(service, scenario)
 
-
-    def _pre_processor(self): ...
-
     def path_variable(self):
         return dict(PageNo=1)
 
-    def role(self): return self.scenario.role()
+    def role(self):
+        return self.scenario.role()
 
     def _execute(self):
         super()._execute()

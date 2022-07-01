@@ -11,9 +11,6 @@ class CtmsFindStudy(StandardStep):
         super().__init__(service, scenario)
         self.service.context[self.Info] = None
 
-    def _post_processor(self):
-        print(self.service.context[self.Info] )
-
     def call_back(self, **kwargs):
         for study in kwargs.get("studies").list():
             if study.name() == self.scenario.study():

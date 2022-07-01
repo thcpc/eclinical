@@ -16,9 +16,6 @@ class CtmsFindSite(StandardStep):
     def sites(self):
         return self.scenario.sites()
 
-    def _post_processor(self):
-        print(self.service.context[self.Info])
-
     def ignore(self):
         try:
             for key, value in self.service.context[self.Info].items():

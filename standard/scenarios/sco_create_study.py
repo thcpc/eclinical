@@ -10,9 +10,9 @@ from eclinical.standard.steps.portal.hierarchies.portal_startup_study import Por
 class ScoCreateStudy:
     def __init__(self, scenario_dir, environment: Environment):
         self.scenario = PortalScenario(scenario_dir)
-        service = PortalApi(environment)
-        self.scenario.append_step(PortalCreateStudy, service)
-        self.scenario.append_step(PortalStartupStudy, service)
+        self.service = PortalApi(environment)
+        self.scenario.append_step(PortalCreateStudy, self.service)
+        self.scenario.append_step(PortalStartupStudy, self.service)
 
     def run(self): self.scenario.run()
 

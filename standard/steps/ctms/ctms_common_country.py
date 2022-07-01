@@ -16,9 +16,6 @@ class CtmsCommonCountry(StandardStep):
         except Exception as e:
             return False
 
-    def _post_processor(self):
-        print(self.service.context[self.Country])
-
     def call_back(self, **kwargs):
         # self.service.context[self.Country] = [{f'{country.name()}': country.id()} for country in kwargs.get("countries").list()]
         self.service.context[self.Country] = dict(zip([country.name() for country in kwargs.get("countries").list()],

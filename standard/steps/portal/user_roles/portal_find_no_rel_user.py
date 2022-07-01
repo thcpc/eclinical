@@ -1,7 +1,6 @@
 from cjen.sco.scenario import Scenario
 from cjen.sco.standard_step import StandardStep
 
-
 from eclinical.standard.scenarios.portal_scenario import PortalScenario
 from eclinical.standard.steps.portal.user_roles.portal_get_user_role import PortalGetUserRole
 
@@ -12,7 +11,6 @@ class PortalFindNoRelUser(StandardStep):
 
     def __init__(self, service, scenario: PortalScenario):
         super().__init__(service, scenario)
-
 
     def _pre_processor(self):
         PortalGetUserRole(self.service, self.scenario).run()

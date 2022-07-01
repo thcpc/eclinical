@@ -10,8 +10,7 @@ class CtmsAllMenu(StandardStep):
     def __init__(self, service, scenario: CtmsScenario):
         super().__init__(service, scenario)
 
-    def _pre_processor(self):
-        ...
+
 
     def ignore(self):
         try:

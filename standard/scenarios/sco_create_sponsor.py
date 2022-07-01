@@ -11,9 +11,9 @@ class ScoCreateSponsor:
     def __init__(self, scenario_dir, environment: Environment):
         self.scenario = PortalScenario(scenario_dir)
         # service = Hierarchies(environment)
-        service = PortalApi(environment)
-        self.scenario.append_step(PortalCreateSponsor, service)
-        self.scenario.append_step(PortalStartSponsor, service)
+        self.service = PortalApi(environment)
+        self.scenario.append_step(PortalCreateSponsor, self.service)
+        self.scenario.append_step(PortalStartSponsor, self.service)
 
     def run(self): self.scenario.run()
 

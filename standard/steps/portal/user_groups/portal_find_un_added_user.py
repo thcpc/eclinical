@@ -21,9 +21,6 @@ class PortalFindUnAddedUser(StandardStep):
             if user.loginName() == self.user_name():
                 self.service.context["user_id"] = user.id()
 
-    def _post_processor(self):
-        print("user_id", self.service.context["user_id"])
-
     def user_name(self): return self.scenario.user()
 
     def _execute(self):

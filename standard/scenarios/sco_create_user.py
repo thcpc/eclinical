@@ -15,14 +15,14 @@ from eclinical.standard.steps.portal.user.portal_user_append_usergroup import Po
 class ScoCreateUser:
     def __init__(self, scenario_dir, environment: Environment):
         self.scenario = PortalScenario(scenario_dir)
-        service = PortalApi(environment)
-        self.scenario.append_step(PortalFindUser, service)
-        self.scenario.append_step(PortalCreateUser, service)
-        self.scenario.append_step(PortalFindUserRole, service)
-        self.scenario.append_step(PortalAssociatedUserGroup, service)
-        self.scenario.append_step(PortalUserAppendUserGroup, service)
-        self.scenario.append_step(PortalUserAccess, service)
-        self.scenario.append_step(PortalStudyTitle, service)
+        self.service = PortalApi(environment)
+        self.scenario.append_step(PortalFindUser, self.service)
+        self.scenario.append_step(PortalCreateUser, self.service)
+        self.scenario.append_step(PortalFindUserRole, self.service)
+        self.scenario.append_step(PortalAssociatedUserGroup, self.service)
+        self.scenario.append_step(PortalUserAppendUserGroup, self.service)
+        self.scenario.append_step(PortalUserAccess, self.service)
+        self.scenario.append_step(PortalStudyTitle, self.service)
 
     def run(self): self.scenario.run()
 

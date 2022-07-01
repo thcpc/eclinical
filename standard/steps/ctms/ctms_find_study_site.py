@@ -17,9 +17,6 @@ class CtmsFindStudySite(StandardStep):
     def _pre_processor(self):
         CtmsFindStudy(self.service, self.scenario).run()
 
-    def _post_processor(self):
-        print(len(self.service.context[self.Info]))
-
     def ignore(self): return self.service.context[CtmsFindStudy.Info] is None
 
     def call_back(self, **kwargs):
