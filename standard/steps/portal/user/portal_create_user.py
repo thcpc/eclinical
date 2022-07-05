@@ -1,6 +1,5 @@
-from cjen.sco.scenario import Scenario
-from cjen.sco.standard_step import StandardStep
 
+from cjen.sco.standard_step import StandardStep
 
 from eclinical.standard.scenarios.portal_scenario import PortalScenario
 from eclinical.standard.steps.portal.user.portal_find_user import PortalFindUser
@@ -11,7 +10,6 @@ class PortalCreateUser(StandardStep):
 
     def __init__(self, service, scenario: PortalScenario):
         super().__init__(service, scenario)
-
 
     def _pre_processor(self): PortalFindUser(self.service, self.scenario).run()
 
