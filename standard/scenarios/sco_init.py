@@ -52,6 +52,6 @@ class ScoInit:
 
 if __name__ == '__main__':
     sco_dir = os.path.join("new_study")
-    envir = Environment.loader("DEV_01")
+    envir = Environment.loader("DEV_03")
     sco = ScoInit(sco_dir, envir)
     sco.run()
