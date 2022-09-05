@@ -1,7 +1,7 @@
 import os
 
-import yaml
-
+# import yaml
+from ruamel.yaml import YAML
 from eclinical.execption import required, optional
 
 
@@ -17,17 +17,18 @@ class Environment:
     def __init__(self, envir, file_path):
         self.file_path = file_path
         with open(file_path, "r", encoding="utf-8") as f:
-            self.env = yaml.load(f.read(), Loader=yaml.FullLoader).get("ENV").get(envir)
+            self.env = YAML().load(f.read()).get("ENV").get(envir)
 
     @classmethod
     def loader(cls, envir):
         cur_dir = os.getcwd()
+        # TODO 有个BUG, 会循环遍历到该所有的 environment.yaml, 会误访问到生产数据
         while os.path.dirname(cur_dir) != cur_dir:
             for root, dirs, files in os.walk(cur_dir):
                 for file in files:
                     if file == "environment.yaml":
                         with open(os.path.join(root, file), "r", encoding="utf-8") as f:
-                            if yaml.load(f.read(), Loader=yaml.FullLoader).get("ENV").get(
+                            if YAML().load(f.read()).get("ENV").get(
                                 envir) is not None: return Environment(envir=envir
                                                                        , file_path=os.path.join(root, file))
             cur_dir = os.path.dirname(cur_dir)
@@ -89,4 +90,4 @@ class Environment:
 
 
 if __name__ == '__main__':
-    print(Environment.loader("US_DEMO_EDETEK_PORTAL"))
+    print(Environment.loader("US_DEMO_EDETEK_PORTAL").study)

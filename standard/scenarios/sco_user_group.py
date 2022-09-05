@@ -4,7 +4,7 @@ from eclinical import Environment
 from eclinical.standard.portal.portal_api import PortalApi
 
 from eclinical.standard.scenarios.portal_scenario import PortalScenario
-from eclinical.standard.scenarios.sco_init import ScoInit
+
 from eclinical.standard.steps.portal.user_groups.portal_create_usergroup import PortalCreateUserGroup
 from eclinical.standard.steps.portal.user_groups.portal_get_lifecycle_hierarchies import PortalGetLifeCycleHierarchies
 from eclinical.standard.steps.portal.user_groups.portal_get_user_group_info import PortalGetUserGroupInfo
