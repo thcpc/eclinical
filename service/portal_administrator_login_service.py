@@ -10,5 +10,5 @@ class PortalAdministratorLoginService(_LoginService):
         self.auth(data=self.user_pwd())
 
     @cjen.http.post_mapping(uri="admin/administrator/auth")
-    @cjen.jwt(key="Authorization", json_path="$.payload.jwtAuthenticationResponse.token")
+    @cjen.jwt(key="Authorization", json_path="$.payload.token")
     def auth(self, data, resp=None, **kwargs): ...

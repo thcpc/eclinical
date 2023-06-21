@@ -25,8 +25,9 @@ class _LoginService(BigTangerine):
         self.context["env"] = self.context.get("env") or self.environment.life_cycle
 
     @cjen.http.post_mapping(uri="admin/auth")
-    @cjen.jwt(key="Authorization", json_path="$.payload.jwtAuthenticationResponse.token")
-    def auth(self, data, resp=None, **kwargs): ...
+    @cjen.jwt(key="Authorization", json_path="$.payload.token")
+    def auth(self, data, resp=None, **kwargs):
+        self.context["workForCompanyId"] = resp.get("payload").get("companyId")
 
     @cjen.http.get_mapping(uri="admin/user/onboard/company")
     def company(self, resp=None, **kwargs):

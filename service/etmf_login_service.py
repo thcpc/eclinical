@@ -19,6 +19,6 @@ class ETMFLoginService(_SponsorLoginService):
         self.sponsor_auth()
 
     @cjen.http.post_mapping(uri="etmf/auth")
-    @cjen.jwt(key="Authorization", json_path="$.payload.jwtAuthenticationResponse.token")
+    @cjen.jwt(key="Authorization", json_path="$.payload.token")
     def sponsor_auth(self, resp=None, **kwargs):
         ...
